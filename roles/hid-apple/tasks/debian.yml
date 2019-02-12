@@ -1,0 +1,7 @@
+---
+- name: Add config for hid-apple
+  copy:
+    content: "options hid-apple iso_layout=0"
+    dest: /etc/modprobe.d/hid-apple.conf
+  notify:
+    - update initramfs

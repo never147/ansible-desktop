@@ -1,0 +1,27 @@
+---
+- name: Enable upstream repo
+  apt_repository:
+    repo: ppa:ansible/ansible
+    codename: xenial
+
+# - name: Check if "{{ ansible_package }}" package is already installed
+#   shell: dpkg-query -W -f='${Status} ${Version}' "{{ ansible_package }}" | grep 'hold ok installed {{ ansible_version }}'
+#   register: ansible_is_installed
+#   failed_when: no
+#   changed_when: no
+
+- name: Hold ansible package
+  command: apt-mark unhold "{{ ansible_package }}"
+#  when: ansible_is_installed.rc == 1
+
+- name: "Install {{ ansible_package }} version {{ ansible_package_version }} package"
+  apt:
+    #name: "{{ ansible_package }}={{ ansible_package_version }}"
+    name: "{{ ansible_package }}"
+    state: latest
+#  when: ansible_is_installed.rc == 1
+#  register: ansible_is_installed
+
+# - name: Hold ansible package
+#   command: apt-mark hold "{{ ansible_package }}"
+#   when: ansible_is_installed.rc == 1

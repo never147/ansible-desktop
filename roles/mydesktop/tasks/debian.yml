@@ -1,0 +1,17 @@
+---
+- name: Download installer
+  get_url:
+    url: ftp://obiftp/modules/unlicensed/global/mydesktop/linux/mydesktopclient_latest_linux.sh
+    dest: /root/mydesktopclient_latest_linux.sh
+    mode: 0755
+  register: installer_download
+
+- name: Run installer
+  command: /root/mydesktopclient_latest_linux.sh
+  when: installer_download.changed
+
+- name: Enable mydesktop service
+  systemd:
+    name: mydesktop
+    enabled: yes
+    state: started

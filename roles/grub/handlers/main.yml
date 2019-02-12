@@ -1,0 +1,4 @@
+---
+# handlers file for grub
+- name: update grub
+  command: update-grub

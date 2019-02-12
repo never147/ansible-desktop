@@ -1,0 +1,11 @@
+---
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+  tags:
+    - apt_update
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+  only_if: os_update

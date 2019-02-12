@@ -1,0 +1,5 @@
+---
+# tasks file for golang
+- name: Install golang
+  include_tasks: "{{ ansible_facts['os_family']|lower }}.yml"
+

@@ -1,0 +1,4 @@
+---
+# handlers file for hid-apple
+- name: update initramfs
+  command: update-initramfs -u

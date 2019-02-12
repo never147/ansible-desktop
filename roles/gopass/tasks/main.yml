@@ -1,0 +1,5 @@
+---
+# tasks file for gopass
+- name: Install gopass
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

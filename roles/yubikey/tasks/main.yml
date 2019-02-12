@@ -1,0 +1,5 @@
+---
+# tasks file for yubikey
+- name: Install yubikey capabilities
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

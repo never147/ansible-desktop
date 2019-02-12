@@ -1,0 +1,6 @@
+---
+# handlers file for shorewall
+- name: shorewall reload
+  systemd:
+    name: shorewall
+    state: reloaded

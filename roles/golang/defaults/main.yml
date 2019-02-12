@@ -1,0 +1,4 @@
+---
+# defaults file for golang
+golang_package: golang-1.10-go
+golang_package_version: latest

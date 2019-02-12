@@ -1,0 +1,51 @@
+---
+# vars file for power-save
+devices:
+  - name: Apple, Inc.
+    vendor: 05ac
+    product: 8406
+    power_control: auto
+  - name: VIA Labs, Inc. Hub
+    vendor: 2109
+    product: 8110
+    power_control: auto
+  - name: Apple, Inc.
+    vendor: 05ac
+    product: 0273
+    power_control: auto
+  - name: Apple, Inc.
+    vendor: 05ac
+    product: 8290
+    power_control: auto
+  - name: Yubico.com
+    vendor: 1050
+    product: 0407
+    power_control: "on"
+  - name: GN Netcom
+    vendor: 0b0e
+    product: 2467
+    power_control: auto
+  - name: Monterey International Corp.
+    vendor: 0566
+    product: 3013
+    power_control: "on"
+  - name: Monterey International Corp.
+    vendor: 0566
+    product: 3020
+    power_control: "on"
+  - name: Genesys Logic, Inc. 4-port hub
+    vendor: 05e3
+    product: 0610
+    power_control: auto
+  - name: Microsoft Corp. Wheel Mouse Optical
+    vendor: 045e
+    product: 0040
+    power_control: "on"
+  - name: GN Netcom
+    vendor: 0b0e
+    product: 245d
+    power_control: auto
+  - name: VIA Labs, Inc. Hub
+    vendor: 2109
+    product: 2811
+    power_control: auto

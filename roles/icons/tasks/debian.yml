@@ -1,0 +1,9 @@
+---
+- name: Enable noobslab icons repo
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/noobslab/icons/ubuntu xenial main
+    state: present
+
+- name: Install icons packages
+  apt:
+   name: ghost-flat-icons

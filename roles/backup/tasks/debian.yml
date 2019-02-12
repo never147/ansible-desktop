@@ -1,0 +1,4 @@
+---
+- apt:
+    name: librsync-dev
+    state: present

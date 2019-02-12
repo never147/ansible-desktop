@@ -1,0 +1,4 @@
+---
+# defaults file for ansible
+ansible_package: ansible
+ansible_package_version: 2.7.1-1ppa~xenial

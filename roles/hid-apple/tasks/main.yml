@@ -1,0 +1,5 @@
+---
+# tasks file for hid-apple
+- name: Configure Apple HID
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

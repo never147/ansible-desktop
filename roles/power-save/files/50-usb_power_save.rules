@@ -1,0 +1,15 @@
+# blacklist for usb autosuspend
+# Cherry Keyboard
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046a", ATTR{idProduct}=="0001", GOTO="power_usb_rules_end"
+# Microsoft Mouse
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="0745", GOTO="power_usb_rules_end"
+# Yubikey
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0010", GOTO="power_usb_rules_end"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0407", GOTO="power_usb_rules_end"
+# HP Mouse
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="03f0", ATTR{idProduct}=="a407", GOTO="power_usb_rules_end"
+# MS Mouse
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="0040", GOTO="power_usb_rules_end"
+
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+LABEL="power_usb_rules_end"

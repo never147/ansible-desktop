@@ -1,0 +1,8 @@
+---
+- name: Add libata.force=noncq to /etc/default/grub
+  replace:
+    path: /etc/default/grub
+    regexp: '^(GRUB_CMDLINE_LINUX=")(?!.*libata.force=noncq)(.*)"$'
+    replace: '\1\2 libata.force=noncq"'
+  notify:
+    - update grub

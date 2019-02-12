@@ -1,0 +1,17 @@
+---
+- name: Pre-accept license agreement
+  debconf:
+    name: virtualbox-ext-pack
+    question: virtualbox-ext-pack/license
+    value: true
+    vtype: boolean
+
+- name: Install virtualbox packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - virtualbox-qt
+    - virtualbox-guest-additions-iso
+    - virtualbox-ext-pack
+    - bridge-utils
+

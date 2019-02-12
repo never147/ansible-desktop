@@ -1,0 +1,105 @@
+---
+- hosts: all
+  roles:
+    - role: apt
+      tags:
+        - apt_update
+    - role: ansible
+      tags:
+        - ansible
+        - configuration
+    - role: mydesktop
+      tags:
+        - system
+        - oracle
+    - role: backup
+      tags:
+        - system
+    - role: desktop-apps
+      tags:
+        - apps
+        - desktop
+    - role: chrome
+      tags:
+        - apps
+        - desktop
+    - role: dev-toolchain
+      tags:
+        - development
+        - desktop
+    - role: docker
+      tags:
+        - system
+        - virtual
+    - role: golang
+      tags:
+        - languages
+        - development
+    - role: gopass
+      tags:
+        - collaboration
+        - security
+        - desktop
+        - apps
+    - role: grub
+      tags:
+        - system
+    - role: hid-apple
+      tags:
+        - system
+        - devices
+    - role: icons
+      tags:
+        - desktop
+        - eyecandy
+    - role: jabra
+      tags:
+        - collaboration
+        - communication
+        - desktop
+        - devices
+    - role: postfix
+      tags:
+        - system
+        - communication
+    - role: power-save
+      tags:
+        - system
+        - devices
+        - power-save
+    - role: shorewall
+      tags:
+        - system
+        - security
+    - role: slack
+      tags:
+        - apps
+        - desktop
+        - communication
+        - collaboration
+    - role: usb-superdrive
+      tags:
+        - system
+        - devices
+    - role: virtualbox
+      tags:
+        - system
+        - apps
+        - desktop
+        - virtual
+    - role: yubikey
+      tags:
+        - system
+        - devices
+        - security
+    - role: zoom
+      tags:
+        - zoom
+        - communication
+        - apps
+        - desktop
+        - collaboration
+    - role: chef
+      tags:
+        - chef
+        - development

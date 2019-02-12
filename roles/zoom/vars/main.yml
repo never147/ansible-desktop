@@ -1,0 +1,4 @@
+---
+# vars file for zoom
+zoom_package: zoom
+zoom_deb_url: https://zoom.us/client/latest/zoom_amd64.deb

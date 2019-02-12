@@ -1,0 +1,17 @@
+---
+- name: Install shorewall package
+  apt:
+    name: shorewall
+
+- name: Shorewall config
+  copy:
+    dest: /etc/shorewall
+    src: shorewall.conf/
+  notify:
+    - shorewall reload
+
+- name: Enable shorewall service
+  systemd:
+    name: shorewall
+    enabled: yes
+    state: started

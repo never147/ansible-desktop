@@ -1,0 +1,12 @@
+---
+# Add download for the demo https://developer.jabra.com/site/global/sdks/linux/
+
+- name: udev rules
+  copy:
+    dest: /etc/udev/rules.d/20-jabra.rules
+    src: 20-jabra.rules
+
+- name: xorg config
+  copy:
+    dest: /etc/X11/xorg.conf.d/50-jabra.conf
+    src: 50-jabra.conf

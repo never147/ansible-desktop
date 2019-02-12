@@ -1,0 +1,22 @@
+---
+- name: Check if "{{ docker_package }}" package is already installed
+  shell: dpkg-query -W -f='${Status}' "{{ docker_package }}" | grep 'hold ok installed'
+  register: is_installed
+  failed_when: no
+  changed_when: no
+
+- name: Install "{{ docker_package }}"  package
+  apt:
+    name: "{{ docker_package }}={{ docker_version }}"
+    state: present
+
+- name: Hold docker package
+  command: apt-mark hold "{{ docker_package }}"
+  when: is_installed.rc == 1
+
+- name: Install /etc/default/docker config
+  copy:
+    src: files/etc_default_docker
+    dest: /etc/default/docker
+  notify:
+    - restart docker

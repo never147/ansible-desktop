@@ -1,0 +1,10 @@
+---
+# handlers file for postfix
+- name: postmap SASL password file
+  command: "postmap /etc/postfix/sasl/passwords" 
+
+- name: postfix reload
+  command: "postfix reload"
+
+- name: newaliases
+  command: newaliases

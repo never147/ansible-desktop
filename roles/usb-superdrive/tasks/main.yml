@@ -1,0 +1,5 @@
+---
+# tasks file for usb-superdrive
+- name: Install and configure usb-superdrive
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

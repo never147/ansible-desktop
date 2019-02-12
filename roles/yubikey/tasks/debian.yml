@@ -1,0 +1,19 @@
+---
+- name: Add Yubico apt repo
+  apt_repository:
+    repo: ppa:yubico/stable
+    codename: xenial
+  #tags:
+  #  - yubico
+  #  - apt
+
+- apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - libpam-u2f
+    - yubico-piv-tool
+    - opensc
+  #tags:
+  #  - yubico
+  #  - apt

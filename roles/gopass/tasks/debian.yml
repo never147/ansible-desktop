@@ -1,0 +1,32 @@
+---
+#- name: Add a key for the gopass packages
+#  apt_key:
+#    url: https://www.justwatch.com/gopass/releases/0x0C92225A97F6B666.pub
+#    state: present
+
+- name: Add gopass apt repo
+  apt_repository:
+    repo: deb https://www.justwatch.com/gopass/releases/binary-amd64 ./
+    state: absent
+    filename: gopass
+
+- name: Add key for gopass packages
+  apt_key:
+    url: https://api.bintray.com/orgs/gopasspw/keys/gpg/public.key
+    state: present
+
+- name: Add gopass apt repo
+  apt_repository: 
+    repo: deb https://dl.bintray.com/gopasspw/gopass trusty main
+    state: present
+    filename: gopass_bintray
+
+- name: Install packages for gopass
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - gnupg
+    - git
+    - rng-tools
+    - gopass

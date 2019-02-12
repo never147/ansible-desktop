@@ -1,0 +1,18 @@
+---
+- name: Check if slack package is already installed
+  shell: dpkg-query -W -f='${Status}' "{{ slack_package }}" | grep 'install ok installed'
+  register: is_installed
+  failed_when: no
+  changed_when: no
+
+- name: Install slack from upstream deb package
+  apt:
+    deb: "{{ slack_deb_url }}"
+    state: present
+  when: is_installed.rc == 1
+
+- apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "{{ slack_package }}"

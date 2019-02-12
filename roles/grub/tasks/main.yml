@@ -1,0 +1,5 @@
+---
+# tasks file for grub
+- name: Configure grub
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

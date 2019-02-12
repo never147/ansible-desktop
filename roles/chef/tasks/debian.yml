@@ -1,0 +1,19 @@
+---
+- name: Check if "{{ chef_package }}" package is already installed
+  shell: dpkg-query -W -f='${Status} ${Version}' "{{ chef_package }}" | grep 'hold ok installed {{ chef_package_version }}'
+  register: chef_is_installed
+  failed_when: no
+  changed_when: no
+
+- name: Unhold chef package
+  command: apt-mark unhold "{{ chef_package }}"
+  failed_when: no
+  when: chef_is_installed.rc == 1
+
+- name: "Install {{ chef_package }} version {{ chef_package_version }} package"
+  apt:
+    deb: "{{ chef_package_url }}"
+  when: chef_is_installed.rc == 1
+
+- name: Hold chef package
+  command: apt-mark hold "{{ chef_package }}"

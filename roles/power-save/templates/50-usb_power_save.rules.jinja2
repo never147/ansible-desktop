@@ -1,0 +1,6 @@
+# blacklist for usb autosuspend
+{% for device in devices %}
+
+# {{ device.name }}
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="{{ device.vendor }}", ATTR{idProduct}=="{{ device.product }}", ATTR{power/control}="{{ device.power_control }}"
+{% endfor %}

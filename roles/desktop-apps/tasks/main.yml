@@ -1,0 +1,3 @@
+---
+- name: Install and configure desktop apps
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"

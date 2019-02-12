@@ -1,0 +1,5 @@
+---
+# tasks file for jabra
+- name: install jabra
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

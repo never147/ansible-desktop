@@ -1,0 +1,5 @@
+---
+# tasks file for mydesktop
+- name: Install mydesktop client
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+
