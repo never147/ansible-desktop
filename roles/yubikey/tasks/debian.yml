@@ -8,12 +8,17 @@
   #  - apt
 
 - apt:
-    name: "{{ item }}"
+    name: 
+     - libpam-u2f
+     - yubico-piv-tool
+     - opensc
+     - yubikey-manager
     state: latest
-  with_items:
-    - libpam-u2f
-    - yubico-piv-tool
-    - opensc
+  #with_items:
+  #  - libpam-u2f
+  #  - yubico-piv-tool
+  #  - opensc
+  #  - yubikey-manager
   #tags:
   #  - yubico
   #  - apt

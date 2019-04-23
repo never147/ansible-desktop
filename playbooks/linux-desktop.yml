@@ -92,6 +92,7 @@
         - system
         - devices
         - security
+        - yubico
     - role: zoom
       tags:
         - zoom
