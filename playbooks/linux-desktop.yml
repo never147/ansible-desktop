@@ -17,6 +17,7 @@
         - system
     - role: desktop-apps
       tags:
+        - desktop-apps
         - apps
         - desktop
     - role: chrome
