@@ -36,6 +36,7 @@
       tags:
         - languages
         - development
+        - golang
     - role: gopass
       tags:
         - collaboration
@@ -105,3 +106,8 @@
       tags:
         - chef
         - development
+    - role: oci
+      tags:
+        - development
+        - virtual
+        - oci

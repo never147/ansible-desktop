@@ -1,0 +1,6 @@
+---
+- name: "Install OCI Utils"
+  apt:
+    name:
+      - cloud-init
+    state: latest

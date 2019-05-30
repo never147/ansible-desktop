@@ -17,7 +17,10 @@
 - name: "Install {{ golang_package }} version {{ golang_package_version }} package"
   apt:
     #name: "{{ golang_package }}={{ golang_package_version }}"
-    name: "{{ golang_package }}"
+    name: 
+      - "{{ golang_package }}-{{ golang_package_version }}-go"
+      - "{{ golang_package }}-{{ golang_package_version }}-doc"
+      - "golang-golang-x-tools"
     state: latest
 #  when: golang_is_installed.rc == 1
 #  register: golang_is_installed
@@ -25,3 +28,20 @@
 # - name: Hold golang package
 #   command: apt-mark hold "{{ golang_package }}"
 #   when: golang_is_installed.rc == 1
+
+- name: Update alternatives for go
+  alternatives:
+    name: "{{ item }}"
+    link: "/usr/bin/{{ item }}"
+    path: "/usr/lib/go-{{ golang_package_version }}/bin/{{ item }}"
+  with_items:
+    - go
+    - gofmt
+
+- name: Manage environment vars
+  lineinfile:
+    name: /etc/profile.d/go
+    regexp: '^export GOROOT'
+    create: yes
+    line: "export GOROOT=/usr/lib/go-{{ golang_package_version }}"
+
