@@ -5,3 +5,4 @@
   with_items:
     - build-essential
     - python-dev
+    - python3.5-dev

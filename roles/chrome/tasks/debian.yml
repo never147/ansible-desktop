@@ -12,8 +12,8 @@
   when: is_installed.rc == 1
 
 - apt:
-    name: "{{ item }}"
+    name: 
+      - "{{ chrome_package }}"
+      - libnss3
+      - libnss3-tools
     state: latest
-  with_items:
-    - "{{ chrome_package }}"
-    - libnss3

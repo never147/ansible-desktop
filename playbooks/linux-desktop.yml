@@ -24,10 +24,12 @@
       tags:
         - apps
         - desktop
+        - chrome
     - role: dev-toolchain
       tags:
         - development
         - desktop
+        - dev-toolchain
     - role: docker
       tags:
         - system
