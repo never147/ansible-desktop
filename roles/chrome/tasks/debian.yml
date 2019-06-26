@@ -16,4 +16,5 @@
     name:
       - "{{ chrome_package }}"
       - libnss3
+      - libnss3-tools
     state: latest

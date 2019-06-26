@@ -48,6 +48,7 @@
       tags:
         - apps
         - desktop
+        - chrome
     - role: dev-toolchain
       tags:
         - development

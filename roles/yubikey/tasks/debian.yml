@@ -6,8 +6,17 @@
 
 - apt:
     name: 
-     - libpam-u2f
-     - yubico-piv-tool
-     - opensc
-     - yubikey-manager
+      - libpam-u2f
+      - yubico-piv-tool
+      - opensc
+      - yubikey-manager
+      - ykcs11
     state: latest
+
+- name: PKCS11 lib link
+  file:
+    path: /usr/local/lib/libykcs11.so
+    src: /usr/lib/x86_64-linux-gnu/libykcs11.so.1.5.0
+    follow: yes
+    state: hard
+    force: yes
