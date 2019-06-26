@@ -15,8 +15,9 @@
       - enigmail
       - rdesktop
       - remmina
-      - pdftk
+     # - pdftk
       - dos2unix
       - xul-ext-lightning
       - thunderbird
       - ipcalc
+      - vim

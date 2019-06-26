@@ -6,6 +6,7 @@
     headers:
       User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
   register: zoom_url_output
+  check_mode: no
 
 - name: Parse HTML
   set_fact:
@@ -24,6 +25,7 @@
   register: zoom_installed_version
   failed_when: no
   changed_when: no
+  check_mode: no
 
 - name: Print installed version
   debug:

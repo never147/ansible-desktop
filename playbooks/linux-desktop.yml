@@ -1,13 +1,37 @@
 ---
 - hosts: all
+  environment: "{{ proxy_env }}"
+  pre_tasks:
+    - set_fact:
+        os_distro: "{{ ansible_facts['distribution'] }}"
+      tags: always
+    - set_fact:
+        os_distro: "ubuntu"
+      tags: always
+      when: os_distro == "Linux Mint"
+    - set_fact:
+        os_codename: "{{ ansible_facts['distribution_release'] }}"
+      tags: always
+    - set_fact:
+        os_codename: "xenial"
+      tags: always
+      when: os_codename == "sylvia"
+    - set_fact:
+        os_codename: "bionic"
+      tags: always
+      when: os_codename == "tessa"
   roles:
     - role: apt
       tags:
         - apt_update
-    - role: ansible
+    #- role: ansible
+    #  tags:
+    #    - ansible
+    #    - configuration
+    - role: network
       tags:
-        - ansible
-        - configuration
+        - system
+        - network
     - role: mydesktop
       tags:
         - system
@@ -28,6 +52,7 @@
       tags:
         - development
         - desktop
+        - dev-toolchain
     - role: docker
       tags:
         - system
@@ -54,6 +79,7 @@
       tags:
         - desktop
         - eyecandy
+        - icons
     - role: jabra
       tags:
         - collaboration

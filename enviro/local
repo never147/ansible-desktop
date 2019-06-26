@@ -1,6 +1,6 @@
 [all]
 # Example
-localhost
+localhost ansible_connection=local
  
 [all:vars]
 #ansible_user= the user that you normally ssh as

@@ -4,10 +4,22 @@
   register: is_installed
   failed_when: no
   changed_when: no
+  check_mode: no
+
+- name: Add key for docker CE packages
+  apt_key:
+    url: "https://download.docker.com/linux/{{ os_distro }}/gpg"
+    state: present
+
+- name: Add docker apt repo
+  apt_repository: 
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ os_distro }} {{ os_codename }} stable"
+    state: present
+    filename: docker
 
 - name: Install "{{ docker_package }}"  package
   apt:
-    name: "{{ docker_package }}={{ docker_version }}"
+    name: "{{ docker_package }}"
     state: present
 
 - name: Hold docker package

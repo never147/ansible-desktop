@@ -4,6 +4,7 @@
   register: is_installed
   failed_when: no
   changed_when: no
+  check_mode: no
 
 - name: Install chrome from upstream deb package
   apt:
@@ -12,8 +13,7 @@
   when: is_installed.rc == 1
 
 - apt:
-    name: "{{ item }}"
+    name:
+      - "{{ chrome_package }}"
+      - libnss3
     state: latest
-  with_items:
-    - "{{ chrome_package }}"
-    - libnss3

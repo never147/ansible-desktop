@@ -1,0 +1,9 @@
+---
+- name: Install networking packages
+  apt:
+    name:
+      - network-manager-openconnect
+      - network-manager-openconnect-gnome
+
+#- name: Import Network Manager config
+#  command: nmcli connection import type openvpn file files/standard_vpn.conf

@@ -4,6 +4,7 @@
   register: is_installed
   failed_when: no
   changed_when: no
+  check_mode: no
 
 - name: Install slack from upstream deb package
   apt:
@@ -12,7 +13,5 @@
   when: is_installed.rc == 1
 
 - apt:
-    name: "{{ item }}"
+    name: "{{ slack_package }}"
     state: latest
-  with_items:
-    - "{{ slack_package }}"

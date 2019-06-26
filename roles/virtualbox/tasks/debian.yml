@@ -8,10 +8,8 @@
 
 - name: Install virtualbox packages
   apt:
-    name: "{{ item }}"
-  with_items:
-    - virtualbox-qt
-    - virtualbox-guest-additions-iso
-    - virtualbox-ext-pack
-    - bridge-utils
-
+    name:
+      - virtualbox-qt
+      - virtualbox-guest-additions-iso
+      - virtualbox-ext-pack
+      - bridge-utils

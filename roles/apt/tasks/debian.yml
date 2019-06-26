@@ -8,4 +8,4 @@
 - name: Update all packages to the latest version
   apt:
     upgrade: dist
-  only_if: os_update
+  when: os_update == true

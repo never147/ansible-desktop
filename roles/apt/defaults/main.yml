@@ -1,2 +1,3 @@
 ---
 # defaults file for apt
+os_update: false

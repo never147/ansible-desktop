@@ -6,3 +6,5 @@
     replace: '\1\2 libata.force=noncq"'
   notify:
     - update grub
+  when: ansible_facts["product_name"] == "MacBookPro12,1"
+

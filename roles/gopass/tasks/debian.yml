@@ -23,10 +23,9 @@
 
 - name: Install packages for gopass
   apt:
-    name: "{{ item }}"
+    name:
+      - gnupg
+      - git
+      - rng-tools
+      - gopass
     state: latest
-  with_items:
-    - gnupg
-    - git
-    - rng-tools
-    - gopass

@@ -2,10 +2,7 @@
 - name: Add Yubico apt repo
   apt_repository:
     repo: ppa:yubico/stable
-    codename: xenial
-  #tags:
-  #  - yubico
-  #  - apt
+    codename: "{{ os_codename }}"
 
 - apt:
     name: 
@@ -14,11 +11,3 @@
      - opensc
      - yubikey-manager
     state: latest
-  #with_items:
-  #  - libpam-u2f
-  #  - yubico-piv-tool
-  #  - opensc
-  #  - yubikey-manager
-  #tags:
-  #  - yubico
-  #  - apt

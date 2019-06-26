@@ -6,6 +6,11 @@
     dest: /etc/udev/rules.d/20-jabra.rules
     src: 20-jabra.rules
 
+- name: Create xorg.conf.d dir
+  file:
+    path: /etc/X11/xorg.conf.d
+    state: directory
+
 - name: xorg config
   copy:
     dest: /etc/X11/xorg.conf.d/50-jabra.conf

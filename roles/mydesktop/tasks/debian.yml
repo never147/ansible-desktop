@@ -7,7 +7,7 @@
   register: installer_download
 
 - name: Run installer
-  command: /root/mydesktopclient_latest_linux.sh
+  shell: /root/mydesktopclient_latest_linux.sh --nox11
   when: installer_download.changed
 
 - name: Enable mydesktop service

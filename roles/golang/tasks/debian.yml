@@ -2,13 +2,14 @@
 - name: Enable upstream repo
   apt_repository:
     repo: ppa:gophers/archive
-    codename: xenial
+    codename: "{{ os_codename }}"
 
 # - name: Check if "{{ golang_package }}" package is already installed
 #   shell: dpkg-query -W -f='${Status} ${Version}' "{{ golang_package }}" | grep 'hold ok installed {{ golang_version }}'
 #   register: golang_is_installed
 #   failed_when: no
 #   changed_when: no
+#   check_mode: no
 
 #- name: Hold golang package
 #  command: apt-mark unhold "{{ golang_package }}"
@@ -24,6 +25,7 @@
     state: latest
 #  when: golang_is_installed.rc == 1
 #  register: golang_is_installed
+#  check_mode: no
 
 # - name: Hold golang package
 #   command: apt-mark hold "{{ golang_package }}"

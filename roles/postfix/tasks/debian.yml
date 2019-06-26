@@ -22,10 +22,9 @@
 
 - name: Install postfix
   apt:
-    name: "{{ item }}"
-  with_items:
-    - postfix
-    - mailutils
+    name:
+      - postfix
+      - mailutils
 
 - name: SASL password directory permissions
   file:
@@ -35,12 +34,6 @@
     mode: 0700
     #recurse: yes
 
-- name: SASL password db permissions
-  file:
-    path: /etc/postfix/sasl/passwords.db
-    owner: postfix
-    mode: 0700
-
 - name: Configure SASL password
   copy:
     content: "{{ postfix_relayhost }} {{ postfix_sasl_user }}:{{ postfix_sasl_pass }}\n"
@@ -49,6 +42,13 @@
     owner: postfix
   notify:
     - postmap SASL password file
+
+- name: SASL password db permissions
+  file:
+    path: /etc/postfix/sasl/passwords.db
+    owner: postfix
+    mode: 0700
+    state: touch
 
 - name: SASL auth config
   blockinfile:
