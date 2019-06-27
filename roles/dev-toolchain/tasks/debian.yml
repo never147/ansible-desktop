@@ -5,3 +5,9 @@
       - python-dev
       - python3-dev
     state: present
+
+- apt:
+    name:
+      - python3.7
+      - python3.7-dev
+  when: os_codename == "bionic"
