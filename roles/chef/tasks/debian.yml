@@ -1,6 +1,6 @@
 ---
 - name: Check if "{{ chef_package }}" package is already installed
-  shell: dpkg-query -W -f='${Status} ${Version}' "{{ chef_package }}" | grep 'hold ok installed {{ chef_package_version }}'
+  shell: dpkg-query -W -f='${Status} ${Version}' "{{ chef_package }}" | grep 'ok installed {{ chef_package_version }}'
   register: chef_is_installed
   failed_when: no
   changed_when: no
