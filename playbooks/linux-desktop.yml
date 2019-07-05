@@ -76,6 +76,7 @@
       tags:
         - system
         - devices
+        - hid-apple
     - role: icons
       tags:
         - desktop
@@ -106,10 +107,6 @@
         - desktop
         - communication
         - collaboration
-    - role: usb-superdrive
-      tags:
-        - system
-        - devices
     - role: virtualbox
       tags:
         - system

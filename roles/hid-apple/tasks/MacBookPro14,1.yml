@@ -1,0 +1,102 @@
+---
+- name: Package requirements for building modules
+  apt:
+    name: 
+      - dkms
+      - linux-headers
+      - git
+      - kmod
+      - libssl-dev
+      - checkinstall
+      - debhelper
+    state: latest
+
+- name: Check that applespi source exists
+  stat:
+    path: /usr/src/applespi-0.1
+  register: stat_result
+  check_mode: no
+
+- name: Download applespi source
+  unarchive:
+    src: https://github.com/roadrunner2/macbook12-spi-driver/archive/touchbar-driver-hid-driver.zip
+    dest: /usr/src/applespi-0.1
+    remote_src: yes
+  when: stat_result.stat.exists == False 
+
+- name: DKMS install Mac HID
+  command: dkms install -m applespi -v 0.1
+
+- name: udevadmin version
+  command: udevadm --version
+  register: udevadm_version
+  check_mode: no
+
+- name: Add evdev hwdb profile
+  copy:
+    src: files/61-evdev-local.hwdb
+    dest: /etc/udev/hwdb.d/61-evdev-local.hwdb
+  when: udevadm_version | int < 242
+
+- name: Remove evdev hwdb profile
+  file:
+    name: /etc/udev/hwdb.d/61-evdev-local.hwdb
+    state: absent
+  when: udevadm_version | int > 242
+
+- name: Install libinput
+  apt:
+    name: libinput-tools
+    state: latest
+
+- name: libinput version
+  command: libinput --version
+  register: libinput_version
+  check_mode: no
+
+- name: Add libinput hwdb profile
+  copy:
+    src: files/61-libinput-local.hwdb
+    dest: /etc/udev/hwdb.d/61-libinput-local.hwdb
+  when: libinput_version | version('1.12.0', '<')
+
+- name: Remove libinput hwdb profile
+  file:
+    name: /etc/udev/hwdb.d/61-libinput-local.hwdb
+    state: absent
+  when: libinput_version | version('1.12.0', '>=')
+
+- name: Add libinput directory
+  file:
+    name: /etc/libinput
+    state: directory
+  when: libinput_version | version('1.12.0', '>=')
+
+- name: Add libinput quirks
+  copy:
+    src: files/local-overrides.quirks
+    dest: /etc/libinput/local-overrides.quirks
+  when: libinput_version | version('1.12.0', '>=')
+
+- name: Remove  libinput quirks
+  file:
+    name: /etc/libinput/local-overrides.quirks
+    state: absent
+  when: libinput_version | version('1.12.0', '<')
+
+- name: Check that facetimehd source exists
+  stat:
+    path: /usr/src/facetimehd-0.1
+  register: facetimehd_stat_result
+  check_mode: no
+
+- name: Download facetimehd source
+  unarchive:
+    src: https://github.com/patjak/bcwc_pcie/archive/mainline.zip
+    dest: /usr/src/facetimehd-0.1
+    remote_src: yes
+  when: facetimehd_stat_result.stat.exists == False
+
+- name: DKMS install facetimehd module
+  command: dkms install -m facetimehd -v 0.1
+

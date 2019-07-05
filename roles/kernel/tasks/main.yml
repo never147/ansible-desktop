@@ -1,0 +1,5 @@
+---
+# tasks file for kernel
+- name: Configure and install kernel packages
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

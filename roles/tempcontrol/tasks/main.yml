@@ -1,0 +1,5 @@
+---
+# tasks file for Temperature control
+- name: Configure laptop temperature control measures
+  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+

@@ -68,3 +68,8 @@
     dest: /etc/tmpfiles.d/pcie_aspm.conf
     content: "w /sys/module/pcie_aspm/parameters/policy - - - - powersave\n"
   when: ansible_facts["product_name"] == "MacBookPro12,1"
+
+- name: Intel Microcode - to stop CPU from overworking
+  apt:
+    name: intel-microcode
+    state: latest

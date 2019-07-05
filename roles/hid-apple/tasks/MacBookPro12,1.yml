@@ -2,10 +2,8 @@
 - name: Install USB SuperDrive package deps
   apt:
     name: sg3-utils
-  when: ansible_facts["product_name"] == "MacBookPro12,1"
 
 - name: Add udev rules for Apple USB SuperDrive
   copy:
     dest: /etc/udev/rules.d/99-usb-superdrive.rules
     src:  99-usb-superdrive.rules
-  when: ansible_facts["product_name"] == "MacBookPro12,1"

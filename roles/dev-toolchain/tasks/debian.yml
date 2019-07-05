@@ -4,6 +4,7 @@
       - build-essential
       - python-dev
       - python3-dev
+      - debhelper
     state: present
 
 - apt:

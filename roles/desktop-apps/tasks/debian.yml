@@ -21,3 +21,5 @@
       - thunderbird
       - ipcalc
       - vim
+      - dmenu
+      - xsel

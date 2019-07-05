@@ -1,0 +1,12 @@
+---
+- name: Install Mac Fan control
+  apt:
+    name: macfanctld
+    state: latest
+
+- name: Mac fan control config
+  copy:
+    src: files/macfanctl.conf
+    dest: /etc/macfanctl.conf
+  notify: 
+    - restart macfanctld

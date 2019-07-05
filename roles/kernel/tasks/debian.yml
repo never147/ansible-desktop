@@ -1,0 +1,9 @@
+---
+- name: HWE Xorg
+  apt:
+    name:
+      - xserver-xorg-hwe-18.04
+      - xwayland-hwe-18.04
+    install_recommends: yes
+    state: latest
+  when: os_codename == "bionic"

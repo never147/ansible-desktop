@@ -1,0 +1,4 @@
+---
+# handlers file for macfanctld
+- name: restart macfanctld
+  service: name=macfanctld state=restarted
