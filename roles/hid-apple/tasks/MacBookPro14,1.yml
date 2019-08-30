@@ -90,8 +90,12 @@
 - name: Download facetimehd source
   unarchive:
     src: https://github.com/patjak/bcwc_pcie/archive/mainline.zip
-    dest: /usr/src/facetimehd-0.1
+    dest: /tmp
     remote_src: yes
+  when: facetimehd_stat_result.stat.exists == False
+
+- name: Relocate the facetimehd source download
+  command: mv /tmp/bcwc_pcie-mainline /usr/src/facetimehd-0.1
   when: facetimehd_stat_result.stat.exists == False
 
 - name: DKMS install facetimehd module

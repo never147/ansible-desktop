@@ -1,0 +1,60 @@
+---
+- name: Get version information from Vagrant site
+  uri:
+    url: "https://www.vagrantup.com/downloads.html"
+    return_content: yes
+    headers:
+      User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
+  register: vagrant_url_output
+  check_mode: no
+
+- name: Parse HTML
+  set_fact:
+    vagrant_deb_url: "{{ vagrant_url_output.content | bs4_find('a', {'data-os': 'debian', 'data-arch': 'x86_64'}) |  bs4_attr('href') }}"
+
+- name: Parsed HTML contents
+  debug:
+    msg: "{{ vagrant_deb_url }}"
+
+- name: Set version
+  set_fact:
+    vagrant_available_version: "{{ vagrant_deb_url.split('/')[-2] }}"
+
+- name: Print available version
+  debug:
+    msg: "The available vagrant version is {{ vagrant_available_version }}"
+
+- name: Check if current vagrant version is already installed
+  shell: "dpkg-query -W -f='${Version}' {{ vagrant_package }}"
+  register: vagrant_installed
+  failed_when: no
+  changed_when: no
+  check_mode: no
+
+- name: Strip the epoch from the installed version string
+  set_fact:
+    vagrant_installed_version: "{{ vagrant_installed.stdout | replace('1:', '') }}"
+
+- name: Print installed version
+  debug:
+    msg: "The installed vagrant version is {{ vagrant_installed_version }}"
+
+- name: Install vagrant from upstream deb package
+  apt:
+    deb: "{{ vagrant_deb_url }}"
+    state: present
+  when: vagrant_installed_version != vagrant_available_version
+
+#- name: "Install {{ vagrant_package }} version {{ vagrant_package_version }} package"
+#- name: "Install {{ vagrant_package }} package"
+#  apt:
+    #name: "{{ vagrant_package }}={{ vagrant_package_version }}"
+#    name: "{{ vagrant_package }}"
+#    state: latest
+#  when: vagrant_is_installed.rc == 1
+#  register: vagrant_is_installed
+#  check_mode: no
+
+# - name: Hold vagrant package
+#   command: apt-mark hold "{{ vagrant_package }}"
+#   when: vagrant_is_installed.rc == 1

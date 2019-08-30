@@ -22,9 +22,9 @@
     name: "{{ docker_package }}"
     state: present
 
-- name: Hold docker package
-  command: apt-mark hold "{{ docker_package }}"
-  when: is_installed.rc == 1
+#- name: Hold docker package
+#  command: apt-mark hold "{{ docker_package }}"
+#  when: is_installed.rc == 1
 
 - name: Install /etc/default/docker config
   copy:

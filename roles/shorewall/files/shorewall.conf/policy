@@ -15,6 +15,12 @@
 $FW		vpn		ACCEPT
 vpn	    $FW 	ACCEPT
 $FW		net		ACCEPT
+dckr    $FW     ACCEPT
+$FW     dckr    ACCEPT
+dckr    net     ACCEPT
+vbox    $FW     ACCEPT
+$FW     vbox    ACCEPT
+vbox    net     ACCEPT
 net		all		DROP		info
 # The FOLLOWING POLICY MUST BE LAST
 all		all		REJECT		info

@@ -13,6 +13,8 @@
 ###############################################################################
 #ZONE	TYPE	OPTIONS			IN			OUT
 #					OPTIONS			OPTIONS
-fw	firewall
-net	ipv4
-vpn ipv4
+fw	    firewall
+net	    ipv4
+vpn     ipv4
+dckr    ipv4
+vbox    ipv4

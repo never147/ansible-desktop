@@ -14,8 +14,10 @@
 ?FORMAT 2
 ###############################################################################
 #ZONE	INTERFACE	OPTIONS
-net     wlp2s0          dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
-net     wlp3s0          dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
-net     ens9            dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
-vpn     cscotun0        dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
-vpn     vpn0            dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+net     wlp2s0      dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+net     wlp3s0      dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+net     ens9        dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+vpn     cscotun0    dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+vpn     vpn0        dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+dckr    docker0     dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
+vbox    vboxnet0    dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0

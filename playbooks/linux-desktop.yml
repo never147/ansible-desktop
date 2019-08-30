@@ -101,6 +101,7 @@
       tags:
         - system
         - security
+        - shorewall
     - role: slack
       tags:
         - apps
@@ -113,6 +114,7 @@
         - apps
         - desktop
         - virtual
+        - virtualbox
     - role: yubikey
       tags:
         - system
@@ -135,3 +137,8 @@
         - development
         - virtual
         - oci
+    - role: vagrant
+      tags:
+        - vagrant
+        - development
+        - virtual

@@ -1,0 +1,3 @@
+---
+# defaults file for vagrant
+vagrant_package: "vagrant"

@@ -41,6 +41,17 @@ def bs4_text(element):
                                  'plugin:\n%s' % e)
 
 
+def bs4_attr(element, attr):
+    if not HAS_LIB:
+        raise AnsibleError('You need to install "bs4" prior to running '
+                           'bs4_find filter')
+
+    try:
+        return element.get(attr)
+    except Exception as e:
+        raise AnsibleFilterError('Error in element.get in bs4_attr filter '
+                                 'plugin:\n%s' % e)
+
 
 class FilterModule(object):
     """Query filter"""
@@ -49,5 +60,6 @@ class FilterModule(object):
     def filters():
         return {
             'bs4_find': bs4_find,
-            'bs4_text': bs4_text
+            'bs4_text': bs4_text,
+            'bs4_attr': bs4_attr
         }
