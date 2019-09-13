@@ -17,9 +17,9 @@ def bs4_find(data, name, attrs=None):
     Example:
     - debug: msg="{{ html_data | bs4_find('table', {'title': 'bar'}) }}"
     """
-    if not HAS_LIB:
-        raise AnsibleError('You need to install "bs4" prior to running '
-                           'bs4_find filter')
+    # if not HAS_LIB:
+    #     raise AnsibleError('You need to install "bs4" prior to running '
+    #                        'bs4_find filter')
 
     try:
         soup = BeautifulSoup(data, 'html.parser')

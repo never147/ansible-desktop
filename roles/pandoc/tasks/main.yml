@@ -1,0 +1,5 @@
+---
+# tasks file for pandoc
+- name: Install pandoc
+  include_tasks: "{{ ansible_facts['os_family']|lower }}.yml"
+

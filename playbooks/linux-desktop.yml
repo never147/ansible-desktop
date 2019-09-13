@@ -39,6 +39,9 @@
     - role: backup
       tags:
         - system
+    - role: kernel
+      tags:
+        - kernel
     - role: desktop-apps
       tags:
         - desktop-apps

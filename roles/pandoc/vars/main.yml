@@ -1,0 +1,4 @@
+---
+# vars file for pandoc
+name: pandoc
+download_page: https://github.com/jgm/pandoc/releases/latest

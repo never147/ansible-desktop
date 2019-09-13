@@ -7,3 +7,20 @@
     install_recommends: yes
     state: latest
   when: os_codename == "bionic"
+
+- name: Purge HWE kernels
+  apt:
+    name:
+      - linux-generic-hwe-18.04
+      - linux-headers-generic-hwe-18.04
+      - linux-image-generic-hwe-18.04
+    state: absent
+    purge: yes
+
+- name: Inotify tweak
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: "524288"
+    state: present
+    sysctl_file: /etc/sysctl.d/60-idea.conf
+    reload: yes
