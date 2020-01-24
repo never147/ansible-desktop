@@ -1,11 +1,6 @@
 Ansible system management
 =========================
 
-Install prerequisites:
-
-    mkvirtualenv $(basename $PWD)
-    pip install -r requirements.txt
-
 Configure your email address and password in the file personal.yml:
 
     ---
