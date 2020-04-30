@@ -16,7 +16,7 @@
 - name: PKCS11 lib link
   file:
     path: /usr/local/lib/libykcs11.so
-    src: /usr/lib/x86_64-linux-gnu/libykcs11.so.1.5.0
+    src: /usr/lib/x86_64-linux-gnu/libykcs11.so.1.6.0
     follow: yes
     state: hard
     force: yes

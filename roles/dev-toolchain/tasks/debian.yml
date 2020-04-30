@@ -8,6 +8,8 @@
       - debhelper
       - pandoc
       - graphviz
+      - maven
+      - openjdk-8-jdk
     state: present
 
 - apt:
