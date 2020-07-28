@@ -1,5 +1,5 @@
 ---
 # tasks file for slack
 - name: Install slack client
-  include_tasks: "{{ ansible_facts['os_distro'] | lower }}.yml"
+  include_tasks: "{{ os_distro | lower }}.yml"
 

@@ -1,5 +1,5 @@
 ---
 # defaults file for chef
 chef_package: chefdk
-chef_package_version: 0.3.6-1
-chef_package_url: https://packages.chef.io/files/stable/chefdk/0.3.6/debian/7/chefdk_0.3.6-1_amd64.deb
+chef_package_version: 3.13.1-1
+chef_package_url: https://packages.chef.io/files/stable/chefdk/3.13.1/debian/7/chefdk_3.13.1-1_amd64.deb
