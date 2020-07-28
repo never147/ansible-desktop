@@ -1,5 +1,5 @@
 ---
 # tasks file for dev-toolchain
 - name: Install development toolchain packages
-  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+  include_tasks: "{{ ansible_facts['os_distro'] | lower }}.yml"
 

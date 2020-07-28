@@ -9,4 +9,5 @@ Configure your email address and password in the file personal.yml:
 
 Run command to apply host changes:
 
-    ./apply.sh
+    make
+

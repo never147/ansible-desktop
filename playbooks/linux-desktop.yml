@@ -20,6 +20,14 @@
         os_codename: "bionic"
       tags: always
       when: os_codename == "tessa"
+    - set_fact:
+        os_codename: "bionic"
+      tags: always
+      when: os_codename == "tricia"
+    - set_fact:
+        os_codename: "focal"
+      tags: always
+      when: os_codename == "ulyana"
   roles:
     - role: apt
       tags:

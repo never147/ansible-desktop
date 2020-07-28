@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base=$(dirname $0)
+base=$(dirname $0)/..
 cd $base
 if [ ! -f $HOME/Apps/virtualenvs/home_dir/bin/activate ] ;then
     ./bootstrap.sh

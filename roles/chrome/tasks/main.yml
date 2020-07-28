@@ -1,5 +1,5 @@
 ---
 # tasks file for chrome
 - name: Install chrome browser
-  include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
+  include_tasks: "{{ ansible_facts['os_distro'] | lower }}.yml"
 
