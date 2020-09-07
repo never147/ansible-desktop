@@ -17,7 +17,7 @@
 
 - name: Add gopass apt repo
   apt_repository: 
-    repo: deb https://dl.bintray.com/gopasspw/gopass trusty main
+    repo: "deb https://dl.bintray.com/gopasspw/gopass {{ os_codename }} main"
     state: present
     filename: gopass_bintray
 

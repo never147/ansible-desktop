@@ -73,3 +73,18 @@
   apt:
     name: intel-microcode
     state: latest
+
+#####################
+# TLP
+#####################
+
+- name: Add tlp apt repo
+  apt_repository: 
+    repo: ppa:linrunner/tlp/ubuntu
+    codename: "{{ os_codename }}"
+
+- name: Install tlp
+  apt:
+    name: tlp
+    state: latest
+

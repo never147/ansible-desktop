@@ -13,8 +13,8 @@
 
 - name: Enable noobslab icons repo
   apt_repository:
-    repo: "deb http://ppa.launchpad.net/noobslab/icons/{{ os_distro }} {{ os_codename }} main"
-    state: present
+    repo: ppa:noobslab/icons
+    codename: "{{ os_codename }}"
 
 - name: Install icons packages
   apt:

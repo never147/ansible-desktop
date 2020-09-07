@@ -23,7 +23,7 @@
 - name: Set vagrant download URL
   set_fact:
     #vagrant_deb_url: "{{ vagrant_url_output.content | bs4_find('a', {'data-os': 'debian', 'data-arch': 'x86_64'}) |  bs4_attr('href') }}"
-    vagrant_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_available_version }}/vagrant_{{ vagrant_available_version }}_linux_amd64.zip"
+    vagrant_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_available_version }}/vagrant_{{ vagrant_available_version }}_x86_64.deb"
 
 - name: Vagrant download URL
   debug:
