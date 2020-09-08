@@ -2,25 +2,25 @@
 - name: disable watchdog
   sysctl:
     name: kernel.nmi_watchdog
-    value: 0
+    value: "0"
     sysctl_file: /etc/sysctl.d/10-disable_watchdog.conf
 
 - name: disable dirty writes
   sysctl:
     name: vm.dirty_writeback_centisecs
-    value: 6000
+    value: "6000"
     sysctl_file: /etc/sysctl.d/10-dirty.conf
 
 - name: laptop mode
   sysctl:
     name: vm.laptop_mode
-    value: 5
+    value: "5"
     sysctl_file: /etc/sysctl.d/10-laptop.conf
 
 - name: Swappiness
   sysctl:
     name: vm.swappiness
-    value: 10
+    value: "10"
     sysctl_file: /etc/sysctl.d/10-vm_swappiness.conf
 
 - name: WiFi power saving

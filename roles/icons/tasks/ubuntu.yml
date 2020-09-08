@@ -11,10 +11,17 @@
     - D530E028F59EAE4D
   when: not proxy_env['http_proxy']
 
-- name: Enable noobslab icons repo
-  apt_repository:
-    repo: ppa:noobslab/icons
-    codename: "{{ os_codename }}"
+- name: Try to add noobslab repo config
+  block:
+    - name: Enable noobslab icons repo
+      apt_repository:
+        repo: ppa:noobslab/icons
+        codename: "{{ os_codename }}"
+  rescue:
+    - name: Enable noobslab icons repo (backup to xenial)
+      apt_repository:
+        repo: ppa:noobslab/icons
+        codename: xenial
 
 - name: Install icons packages
   apt:

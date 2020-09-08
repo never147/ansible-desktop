@@ -1,8 +1,13 @@
 ---
-- name: Enable upstream repo
-  apt_repository:
-    repo: ppa:gophers/archive
-    codename: "{{ os_codename }}"
+- name: Try prerequisite repo config
+  block:
+    - name: Enable upstream repo
+      apt_repository:
+        repo: ppa:gophers/archive
+        codename: "{{ os_codename }}"
+  rescue:
+    - debug:
+        msg: "Gophers ppa not supported"
 
 # - name: Check if "{{ golang_package }}" package is already installed
 #   shell: dpkg-query -W -f='${Status} ${Version}' "{{ golang_package }}" | grep 'hold ok installed {{ golang_version }}'
@@ -21,7 +26,6 @@
     name: 
       - "{{ golang_package }}-{{ golang_package_version }}-go"
       - "{{ golang_package }}-{{ golang_package_version }}-doc"
-      - "golang-golang-x-tools"
     state: latest
 #  when: golang_is_installed.rc == 1
 #  register: golang_is_installed

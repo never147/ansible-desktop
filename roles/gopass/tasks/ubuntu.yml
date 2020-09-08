@@ -15,11 +15,19 @@
     url: https://api.bintray.com/orgs/gopasspw/keys/gpg/public.key
     state: present
 
-- name: Add gopass apt repo
-  apt_repository: 
-    repo: "deb https://dl.bintray.com/gopasspw/gopass {{ os_codename }} main"
-    state: present
-    filename: gopass_bintray
+- name: Try to configure apt repo
+  block:
+    - name: Add gopass apt repo
+      apt_repository: 
+        repo: "deb https://dl.bintray.com/gopasspw/gopass {{ os_codename }} main"
+        state: present
+        filename: gopass_bintray
+  rescue:
+    - name: Add gopass apt repo (backup to debian jessie)
+      apt_repository: 
+        repo: "deb https://dl.bintray.com/gopasspw/gopass jessie main"
+        state: present
+        filename: gopass_bintray
 
 - name: Install packages for gopass
   apt:

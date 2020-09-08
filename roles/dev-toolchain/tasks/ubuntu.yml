@@ -17,3 +17,16 @@
       - python3.7
       - python3.7-dev
   when: os_codename == "bionic"
+
+#- apt_repository:
+#    repo: ppa:fkrull/deadsnakes
+#    state: present
+#  when: os_codename == "focal"
+#
+#- apt:
+#    name:
+#      - python3.6
+#      - python3.6-dev
+#      - python3.7
+#      - python3.7-dev
+#  when: os_codename == "focal"
