@@ -1,0 +1,5 @@
+APT::Install-Recommends "false";
+Aptitude::Recommends-Important "false";
+
+APT::AutoRemove::RecommendsImportant "false";
+APT::AutoRemove::SuggestsImportant "false";

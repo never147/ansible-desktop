@@ -2,7 +2,7 @@
 set -x
 BASE=$(dirname $0)/..
 
-sudo apt-get install -y --install-recommends python3-dev
+#sudo apt-get install -y --install-recommends python3-dev
 
 mkdir -p ~/.local/bin
 export PATH=$PATH:~/.local/bin
