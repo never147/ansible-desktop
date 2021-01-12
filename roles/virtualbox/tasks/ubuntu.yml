@@ -20,7 +20,7 @@
   apt:
     name:
       - virtualbox
-      #- virtualbox-qt
-      #- virtualbox-guest-additions-iso
-      #- virtualbox-ext-pack
+      - virtualbox-qt
+      - virtualbox-guest-additions-iso
+      - virtualbox-ext-pack
       - bridge-utils
