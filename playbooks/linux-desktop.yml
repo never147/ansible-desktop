@@ -28,6 +28,10 @@
         os_codename: "focal"
       tags: always
       when: os_codename == "ulyana"
+    - set_fact:
+        os_codename: "focal"
+      tags: always
+      when: os_codename == "ulyssa"
   roles:
     - role: apt
       tags:

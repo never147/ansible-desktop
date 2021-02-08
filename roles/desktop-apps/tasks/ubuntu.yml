@@ -1,7 +1,13 @@
 ---
+- name: Add the Mozilla PPA
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/mozillateam/ppa/ubuntu {{ os_codename }} main"
+    state: present
+    filename: mozillateam
+
 - name: Install desktop packages
   apt:
-    state: present
+    state: latest
     name:
       - spotify-client
       - sublime-text
@@ -26,3 +32,4 @@
       - screen
       - at
       - lzma
+      - bzip2
