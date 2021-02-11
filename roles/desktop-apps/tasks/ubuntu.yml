@@ -18,7 +18,6 @@
       - git
       - jq
       - tree
-      - enigmail
       - rdesktop
       - remmina
      # - pdftk
