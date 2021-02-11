@@ -1,16 +1,25 @@
 ---
-- name: Check if chrome package is already installed
-  shell: dpkg-query -W -f='${Status}' "{{ chrome_package }}" | grep 'install ok installed'
-  register: is_installed
-  failed_when: no
-  changed_when: no
-  check_mode: no
+#- name: Check if chrome package is already installed
+#  shell: dpkg-query -W -f='${Status}' "{{ chrome_package }}" | grep 'install ok installed'
+#  register: is_installed
+#  failed_when: no
+#  changed_when: no
+#  check_mode: no
 
-- name: Install chrome from upstream deb package
+- name: Google package signing key
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+- name: Google package repo
+  apt_repository:
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: google.list
+
+- name: Install chrome
   apt:
-    deb: "{{ chrome_deb_url }}"
-    state: present
-  when: is_installed.rc == 1
+    name: "{{ chrome_package }}"
+    state: latest
+#  when: is_installed.rc == 1
 
 - apt:
     name:
