@@ -84,6 +84,7 @@
         - security
         - desktop
         - apps
+        - gopass
     - role: grub
       tags:
         - system

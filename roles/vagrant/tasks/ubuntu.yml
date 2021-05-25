@@ -1,58 +1,76 @@
 ---
-- name: Get version information from Vagrant site
-  uri:
-    url: "https://vagrantup.com/downloads"
-    return_content: yes
-    headers:
-      User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
-  register: vagrant_url_output
-  check_mode: no
-
-- name: Parse HTML - get version
-  set_fact:
-    vagrant_data: "{{ vagrant_url_output.content | bs4_find('script', {'id': '__NEXT_DATA__'}) | bs4_text | from_json }}"
-
-- name: Set vagrant version needed
-  set_fact:
-    vagrant_available_version: "{{ vagrant_data.props.pageProps.releaseData.version }}"
-
-- name: Print available version
-  debug:
-    msg: "The available vagrant version is {{ vagrant_available_version }}"
-
-- name: Set vagrant download URL
-  set_fact:
-    #vagrant_deb_url: "{{ vagrant_url_output.content | bs4_find('a', {'data-os': 'debian', 'data-arch': 'x86_64'}) |  bs4_attr('href') }}"
-    vagrant_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_available_version }}/vagrant_{{ vagrant_available_version }}_x86_64.deb"
-
-- name: Vagrant download URL
-  debug:
-    msg: "{{ vagrant_deb_url }}"
-
-#- name: Set version
-#  set_fact:
-#    vagrant_available_version: "{{ vagrant_deb_url.split('/')[-2] }}"
-
-- name: Check if current vagrant version is already installed
-  shell: "dpkg-query -W -f='${Version}' {{ vagrant_package }}"
-  register: vagrant_installed
-  failed_when: no
-  changed_when: no
-  check_mode: no
-
-- name: Strip the epoch from the installed version string
-  set_fact:
-    vagrant_installed_version: "{{ vagrant_installed.stdout | replace('1:', '') }}"
-
-- name: Print installed version
-  debug:
-    msg: "The installed vagrant version is {{ vagrant_installed_version }}"
-
-- name: Install vagrant from upstream deb package
-  apt:
-    deb: "{{ vagrant_deb_url }}"
+# curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+- name: Add hasicorp apt key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
     state: present
-  when: vagrant_installed_version != vagrant_available_version
+
+# sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+- name: Add hashicorp apt repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ os_codename }} main"
+    state: present
+    filename: hashicorp
+
+# sudo apt-get update && sudo apt-get install vagrant
+- name: Install vagrant
+  apt:
+    name: vagrant
+
+#- name: Get version information from Vagrant site
+#  uri:
+#    url: "https://vagrantup.com/downloads"
+#    return_content: yes
+#    headers:
+#      User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
+#  register: vagrant_url_output
+#  check_mode: no
+#
+#- name: Parse HTML - get version
+#  set_fact:
+#    vagrant_data: "{{ vagrant_url_output.content | bs4_find('script', {'id': '__NEXT_DATA__'}) | bs4_text | from_json }}"
+#
+#- name: Set vagrant version needed
+#  set_fact:
+#    vagrant_available_version: "{{ vagrant_data.props.pageProps.releaseData.version }}"
+#
+#- name: Print available version
+#  debug:
+#    msg: "The available vagrant version is {{ vagrant_available_version }}"
+#
+#- name: Set vagrant download URL
+#  set_fact:
+#    #vagrant_deb_url: "{{ vagrant_url_output.content | bs4_find('a', {'data-os': 'debian', 'data-arch': 'x86_64'}) |  bs4_attr('href') }}"
+#    vagrant_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_available_version }}/vagrant_{{ vagrant_available_version }}_x86_64.deb"
+#
+#- name: Vagrant download URL
+#  debug:
+#    msg: "{{ vagrant_deb_url }}"
+#
+##- name: Set version
+##  set_fact:
+##    vagrant_available_version: "{{ vagrant_deb_url.split('/')[-2] }}"
+#
+#- name: Check if current vagrant version is already installed
+#  shell: "dpkg-query -W -f='${Version}' {{ vagrant_package }}"
+#  register: vagrant_installed
+#  failed_when: no
+#  changed_when: no
+#  check_mode: no
+#
+#- name: Strip the epoch from the installed version string
+#  set_fact:
+#    vagrant_installed_version: "{{ vagrant_installed.stdout | replace('1:', '') }}"
+#
+#- name: Print installed version
+#  debug:
+#    msg: "The installed vagrant version is {{ vagrant_installed_version }}"
+#
+#- name: Install vagrant from upstream deb package
+#  apt:
+#    deb: "{{ vagrant_deb_url }}"
+#    state: present
+#  when: vagrant_installed_version != vagrant_available_version
 
 #- name: "Install {{ vagrant_package }} version {{ vagrant_package_version }} package"
 #- name: "Install {{ vagrant_package }} package"

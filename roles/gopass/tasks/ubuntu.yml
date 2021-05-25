@@ -4,36 +4,81 @@
 #    url: https://www.justwatch.com/gopass/releases/0x0C92225A97F6B666.pub
 #    state: present
 
-- name: Add gopass apt repo
+- name: Remove gopass apt repo
   apt_repository:
     repo: deb https://www.justwatch.com/gopass/releases/binary-amd64 ./
     state: absent
     filename: gopass
 
-- name: Add key for gopass packages
-  apt_key:
-    url: https://api.bintray.com/orgs/gopasspw/keys/gpg/public.key
-    state: present
+#- name: Add key for gopass packages
+#  apt_key:
+#    url: https://api.bintray.com/orgs/gopasspw/keys/gpg/public.key
+#    state: present
 
-- name: Try to configure apt repo
-  block:
-    - name: Add gopass apt repo
-      apt_repository: 
-        repo: "deb https://dl.bintray.com/gopasspw/gopass {{ os_codename }} main"
-        state: present
-        filename: gopass_bintray
-  rescue:
-    - name: Add gopass apt repo (backup to debian jessie)
-      apt_repository: 
-        repo: "deb https://dl.bintray.com/gopasspw/gopass jessie main"
-        state: present
-        filename: gopass_bintray
+- name: Remove gopass apt repo
+  apt_repository: 
+    repo: "deb https://dl.bintray.com/gopasspw/gopass {{ os_codename }} main"
+    state: absent
+    filename: gopass_bintray
 
-- name: Install packages for gopass
+- name: Remove gopass apt repo (backup to debian jessie)
+  apt_repository: 
+    repo: "deb https://dl.bintray.com/gopasspw/gopass jessie main"
+    state: absent
+    filename: gopass_bintray
+
+- name: Install pre-requisite packages for gopass
   apt:
     name:
       - gnupg
       - git
       - rng-tools
-      - gopass
+      #- gopass
     state: latest
+
+- name: Get gopass version information from Gihub
+  uri:
+    url: "https://github.com/gopasspw/gopass/releases/latest"
+    return_content: yes
+    headers:
+      User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
+    method: HEAD
+  register: gopass_url_response
+  check_mode: no
+
+- block:
+    - name: Set version
+      set_fact:
+        gopass_available_version: "{{ gopass_url_response.url.split('/')[-1].strip('v') }}"
+  rescue:
+    - name: No version info
+      debug:
+        msg: "No version info found for gopass"
+    - name: Set null version
+      set_fact:
+        gopass_available_version: null
+
+- name: Print available version
+  debug:
+    msg: "The available gopass version is {{ gopass_available_version }}"
+
+- name: Check if current gopass version is already installed
+  shell: "dpkg-query -W -f='${Version}' {{ gopass_package }}"
+  register: gopass_installed_version
+  failed_when: no
+  changed_when: no
+  check_mode: no
+
+- name: Print installed version
+  debug:
+    msg: "The installed gopass version is {{ gopass_installed_version.stdout }}"
+
+- name: Is newer?
+  debug:
+    msg: "{{ gopass_available_version is version(gopass_installed_version.stdout, '>') }}"
+
+- name: Install if newer version available
+  apt:
+    deb: "https://github.com/gopasspw/gopass/releases/download/v{{ gopass_available_version }}/gopass_{{ gopass_available_version }}_linux_amd64.deb"
+  when: gopass_available_version is version(gopass_installed_version.stdout, '>')
+

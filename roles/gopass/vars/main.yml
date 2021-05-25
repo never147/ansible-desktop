@@ -1,2 +1,3 @@
 ---
 # vars file for gopass
+gopass_package: gopass
