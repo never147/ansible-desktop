@@ -36,6 +36,9 @@
     - role: apt
       tags:
         - apt_update
+    - role: security
+      tags:
+        - security
     #- role: ansible
     #  tags:
     #    - ansible
