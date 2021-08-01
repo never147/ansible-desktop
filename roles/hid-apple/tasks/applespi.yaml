@@ -1,0 +1,40 @@
+---
+- name: 'kernel version from facts'
+  debug:
+   msg: '{{ansible_kernel}}'
+
+- name: Check that applespi source exists
+  stat:
+    path: /usr/src/applespi-0.1
+  register: stat_result
+  check_mode: no
+#  #when: ansible_kernel | version_compare('5', '<')
+
+#- name: Delete directory for apple-spi
+#  file:
+#    path: /usr/src/applespi-0.1
+#    state: absent
+
+- name: Download applespi source
+  unarchive:
+    src: https://github.com/roadrunner2/macbook12-spi-driver/archive/touchbar-driver-hid-driver.zip
+    dest: /tmp
+    remote_src: yes
+  when: 
+    - stat_result.stat.exists == False 
+  #  - ansible_kernel | version_compare('5', '<')
+
+- name: Relocate downloaded source
+  shell: mv /tmp/macbook12-spi-driver-touchbar-driver-hid-driver /usr/src/applespi-0.1
+  when: 
+    - stat_result.stat.exists == False
+#  #  - ansible_kernel | version_compare('5', '<')
+
+- name: DKMS install Mac HID
+  command: dkms install -m applespi -v 0.1
+  #when: ansible_kernel | version_compare('5', '<')
+
+- name: udevadmin version
+  command: udevadm --version
+  register: udevadm_version
+  check_mode: no

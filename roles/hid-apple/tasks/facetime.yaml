@@ -1,0 +1,26 @@
+---
+- name: Check that facetimehd source exists
+  stat:
+    path: /usr/src/facetimehd-0.1
+  register: facetimehd_stat_result
+  check_mode: no
+
+- name: Download facetimehd source
+  unarchive:
+    src: https://github.com/patjak/bcwc_pcie/archive/master.zip
+    dest: /tmp
+    remote_src: yes
+  when: facetimehd_stat_result.stat.exists == False
+
+- name: Relocate the facetimehd source download
+  command: mv /tmp/bcwc_pcie-master /usr/src/facetimehd-0.1
+  when: facetimehd_stat_result.stat.exists == False
+
+- name: DKMS install facetimehd module
+  command: dkms install -m facetimehd -v 0.1
+
+- name: Enable facetimehd module load at boot
+  copy:
+    dest: /etc/modules-load.d/facetimehd.conf
+    content: 'facetimehd'
+

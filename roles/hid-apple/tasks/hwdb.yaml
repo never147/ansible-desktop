@@ -1,0 +1,57 @@
+---
+- name: udevadmin version
+  command: udevadm --version
+  register: udevadm_version
+  check_mode: no
+
+- name: Add evdev hwdb profile
+  copy:
+    src: files/61-evdev-local.hwdb
+    dest: /etc/udev/hwdb.d/61-evdev-local.hwdb
+  when: udevadm_version | int < 242
+
+- name: Remove evdev hwdb profile
+  file:
+    name: /etc/udev/hwdb.d/61-evdev-local.hwdb
+    state: absent
+  when: udevadm_version | int > 242
+
+- name: Install libinput
+  apt:
+    name: libinput-tools
+    state: latest
+
+- name: libinput version
+  command: libinput --version
+  register: libinput_version
+  check_mode: no
+
+- name: Add libinput hwdb profile
+  copy:
+    src: files/61-libinput-local.hwdb
+    dest: /etc/udev/hwdb.d/61-libinput-local.hwdb
+  when: libinput_version.stdout is version('1.12.0', '<', strict=True)
+
+- name: Remove libinput hwdb profile
+  file:
+    name: /etc/udev/hwdb.d/61-libinput-local.hwdb
+    state: absent
+  when: libinput_version.stdout is version('1.12.0', '>=', strict=True)
+
+- name: Add libinput directory
+  file:
+    name: /etc/libinput
+    state: directory
+  when: libinput_version.stdout is version('1.12.0', '>=', strict=True)
+
+- name: Add libinput quirks
+  copy:
+    src: files/local-overrides.quirks
+    dest: /etc/libinput/local-overrides.quirks
+  when: libinput_version.stdout is version('1.12.0', '>=', strict=True)
+
+- name: Remove  libinput quirks
+  file:
+    name: /etc/libinput/local-overrides.quirks
+    state: absent
+  when: libinput_version.stdout is version('1.12.0', '<', strict=True)

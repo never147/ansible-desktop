@@ -1,0 +1,10 @@
+---
+- name: Package requirements for building modules
+  apt:
+    name:
+      - dkms
+      - git
+      - libssl-dev
+      - debhelper
+    state: latest
+
