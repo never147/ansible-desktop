@@ -88,3 +88,8 @@
     name: tlp
     state: latest
 
+#####################
+
+- name: Install tuned
+  apt:
+    name: tuned

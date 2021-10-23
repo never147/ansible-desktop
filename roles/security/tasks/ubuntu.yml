@@ -1,0 +1,6 @@
+---
+- name: Install security related packages
+  apt:
+    name:
+      - debsums
+
