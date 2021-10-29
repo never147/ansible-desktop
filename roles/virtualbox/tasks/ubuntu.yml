@@ -9,12 +9,12 @@
     repo: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ os_codename }} contrib"
     state: absent
 
-#- name: Pre-accept license agreement
-#  debconf:
-#    name: virtualbox-ext-pack
-#    question: virtualbox-ext-pack/license
-#    value: true
-#    vtype: boolean
+- name: Pre-accept license agreement
+  debconf:
+    name: virtualbox-ext-pack
+    question: virtualbox-ext-pack/license
+    value: true
+    vtype: boolean
 
 - name: Install virtualbox packages
   apt:

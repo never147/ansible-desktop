@@ -1,7 +1,9 @@
 ---
 - name: Add the Mozilla PPA
   apt_repository:
-    repo: "deb http://ppa.launchpad.net/mozillateam/ppa/ubuntu {{ os_codename }} main"
+    #repo: "deb http://ppa.launchpad.net/mozillateam/ppa/ubuntu {{ os_codename }} main"
+    repo: ppa:mozillateam/ppa
+    codename: "{{ os_codename }}"
     state: present
     filename: mozillateam
 

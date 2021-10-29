@@ -1,19 +1,10 @@
 [all]
-# Example
 localhost ansible_connection=local
  
 [all:vars]
-#ansible_user= the user that you normally ssh as
-#ansible_user=matthbak
- 
-#If you have an ssh-key
-#ansible_ssh_private_key_file=~/.ssh/id_rsa
- 
 ansible_become=yes
 ansible_become_method="sudo"
 ansible_become_user="root"
-
-postfix_relayhost="[stbeehive.oracle.com]:465"
 
 # Python 3.8 in virtalenv doesn't find system python3-apt
 ansible_python_interpreter=/usr/bin/python3

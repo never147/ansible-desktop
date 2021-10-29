@@ -1,7 +1,7 @@
 ---
 - name: Get version information for Zoom site
   uri:
-    url: "https://oracle.zoom.us/support/down4j"
+    url: "https://zoom.us/support/down4j"
     return_content: yes
     headers:
       User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"

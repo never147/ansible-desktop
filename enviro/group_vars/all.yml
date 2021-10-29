@@ -3,3 +3,11 @@ proxy_env:
   no_proxy: ''
   http_proxy: ''
   https_proxy: ''
+os_codenames:
+  sylvia: "xenial"
+  tessa: "bionic"
+  tricia: "bionic"
+  ulyana: "focal"
+  ulyssa: "focal"
+  uma: "focal"
+

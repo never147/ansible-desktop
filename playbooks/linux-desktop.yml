@@ -10,28 +10,11 @@
       tags: always
       when: os_distro == "Linux Mint"
     - set_fact:
-        os_codename: "{{ ansible_facts['distribution_release'] }}"
+        os_codename: "{{ os_codenames[ansible_facts['distribution_release']] }}"
       tags: always
-    - set_fact:
-        os_codename: "xenial"
+    - debug:
+        msg: "{{ os_codename }}"
       tags: always
-      when: os_codename == "sylvia"
-    - set_fact:
-        os_codename: "bionic"
-      tags: always
-      when: os_codename == "tessa"
-    - set_fact:
-        os_codename: "bionic"
-      tags: always
-      when: os_codename == "tricia"
-    - set_fact:
-        os_codename: "focal"
-      tags: always
-      when: os_codename == "ulyana"
-    - set_fact:
-        os_codename: "focal"
-      tags: always
-      when: os_codename == "ulyssa"
   roles:
     - role: apt
       tags:
@@ -47,10 +30,6 @@
       tags:
         - system
         - network
-    - role: mydesktop
-      tags:
-        - system
-        - oracle
     - role: backup
       tags:
         - system
@@ -88,14 +67,14 @@
         - desktop
         - apps
         - gopass
-    - role: grub
-      tags:
-        - system
-    - role: hid-apple
-      tags:
-        - system
-        - devices
-        - hid-apple
+    #- role: grub
+    #  tags:
+    #    - system
+    #- role: hid-apple
+    #  tags:
+    #   - system
+    #     - devices
+    #    - hid-apple
     - role: icons
       tags:
         - desktop
@@ -147,15 +126,10 @@
         - apps
         - desktop
         - collaboration
-    - role: chef
-      tags:
-        - chef
-        - development
-    - role: oci
-      tags:
-        - development
-        - virtual
-        - oci
+    #- role: chef
+    #  tags:
+    #    - chef
+    #    - development
     - role: vagrant
       tags:
         - vagrant

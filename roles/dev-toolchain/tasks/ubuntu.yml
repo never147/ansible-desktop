@@ -2,7 +2,9 @@
 
 - name: Adding ppa for unmaintained python versions
   apt_repository:
-    repo: "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu {{ os_codename }} main"
+    #repo: "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu {{ os_codename }} main"
+    repo: ppa:deadsnakes/ppa
+    codename: "{{ os_codename }}"
     state: present
 
 - name: Installing apt packages for development

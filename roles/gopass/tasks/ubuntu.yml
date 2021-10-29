@@ -73,12 +73,13 @@
   debug:
     msg: "The installed gopass version is {{ gopass_installed_version.stdout }}"
 
-- name: Is newer?
-  debug:
-    msg: "{{ gopass_available_version is version(gopass_installed_version.stdout, '>') }}"
+#- name: Is newer?
+#  debug:
+#    msg: "{{ gopass_available_version is version(gopass_installed_version.stdout, '>') }}"
 
 - name: Install if newer version available
   apt:
     deb: "https://github.com/gopasspw/gopass/releases/download/v{{ gopass_available_version }}/gopass_{{ gopass_available_version }}_linux_amd64.deb"
-  when: gopass_available_version is version(gopass_installed_version.stdout, '>')
+  when: gopass_installed_version.stdout == '' or
+        gopass_available_version is version(gopass_installed_version.stdout, '>')
 

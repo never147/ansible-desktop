@@ -3,3 +3,4 @@
 postfix_sasl_user: "user@example.com"
 postfix_sasl_pass: "p@55w0rd"
 postfix_relayhost: "mail.example.com"
+postfix_unix_user: "username123"

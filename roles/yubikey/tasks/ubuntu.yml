@@ -20,3 +20,11 @@
     follow: yes
     state: hard
     force: yes
+
+- name: OpenSC lib link
+  file:
+    path: /usr/local/lib/opensc-pkcs11.so
+    src: /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so
+    state: hard
+    force: yes
+

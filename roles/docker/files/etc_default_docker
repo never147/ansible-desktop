@@ -13,7 +13,7 @@
 # Use DOCKER_OPTS to modify the daemon startup options.
 #DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4"
 #OPTIONS="-H fd://"
-#DOCKER_OPTS="--insecure-registry opc-delivery.docker.oraclecorp.com --insecure-registry slcas760.us.oracle.com:5000 ---insecure-registry sre.docker.oraclecorp.com --insecure-registry localhost:5000"
+#DOCKER_OPTS="--insecure-registry localhost:5000"
 
 # If you need Docker to use an HTTP proxy, it can also be specified here.
 #export http_proxy="http://127.0.0.1:3128/"
