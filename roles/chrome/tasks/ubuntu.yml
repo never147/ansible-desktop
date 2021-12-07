@@ -8,12 +8,12 @@
 
 - name: Google package signing key
   apt_key:
-    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    url: http://dl-ssl.google.com/linux/linux_signing_key.pub
 
 - name: Google package repo
   apt_repository:
     repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google.list
+    filename: google-chrome
 
 - name: Install chrome
   apt:
