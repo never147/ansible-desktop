@@ -1,2 +1,5 @@
 ---
 # defaults file for shorewall
+shorewall_not_net_interfaces:
+  - lo
+  - docker0

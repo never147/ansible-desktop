@@ -10,6 +10,13 @@
   notify:
     - shorewall reload
 
+- name: Templated files for shorewall
+  template:
+    src: "{{ item }}.jinja2"
+    dest: "/etc/shorewall/{{ item }}"
+  with_items:
+    - interfaces
+
 - name: Enable shorewall service
   systemd:
     name: shorewall
