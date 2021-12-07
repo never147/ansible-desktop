@@ -10,27 +10,4 @@
 - name: Install desktop packages
   apt:
     state: latest
-    name:
-      - spotify-client
-      - sublime-text
-      - gnupg
-      - keepassx
-      - openssh-server
-      - dropbox
-      - git
-      - jq
-      - tree
-      - rdesktop
-      - remmina
-     # - pdftk
-      - dos2unix
-      - xul-ext-lightning
-      - thunderbird
-      - ipcalc
-      - vim
-      - dmenu
-      - xsel
-      - screen
-      - at
-      - lzma
-      - bzip2
+    name: "{{ desktop_packages[os_distro|lower] }}"

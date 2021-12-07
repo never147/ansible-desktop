@@ -11,7 +11,6 @@
   apt:
     name:
       - build-essential
-      - python-dev
       - python3-dev
       - python3-venv
       - python3-distutils
@@ -20,8 +19,10 @@
       - python3-setuptools
       - python3.6
       - python3.6-dev
+      - python3.6-venv
       - python3.7
       - python3.7-dev
+      - python3.7-venv
       - debhelper
       - pandoc
       - texlive-latex-base
@@ -32,6 +33,7 @@
       - graphviz
       - maven
       - openjdk-8-jdk
+      - azure-cli
     state: present
 
 - name: Remove obsolete packages
