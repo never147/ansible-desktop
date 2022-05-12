@@ -7,22 +7,34 @@
     codename: "{{ os_codename }}"
     state: present
 
+- name: Set python versions
+  set_fact:
+    py_versions: "{{
+      py_versions|default([]) + [
+        'python' + item,
+        'python' + item + '-dev',
+        'python' + item + '-venv'
+      ]
+    }}"
+  with_items:
+    - "3"
+    - "3.6"
+    - "3.7"
+    - "3.8"
+    - "3.9"
+
+- name: Install python
+  apt:
+    name: "{{ py_versions }}"
+
 - name: Installing apt packages for development
   apt:
     name:
       - build-essential
-      - python3-dev
-      - python3-venv
       - python3-distutils
       - python3-jsonschema
       - python3-pip
       - python3-setuptools
-      - python3.6
-      - python3.6-dev
-      - python3.6-venv
-      - python3.7
-      - python3.7-dev
-      - python3.7-venv
       - debhelper
       - pandoc
       - texlive-latex-base

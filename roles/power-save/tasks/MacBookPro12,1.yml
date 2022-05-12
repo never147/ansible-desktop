@@ -1,0 +1,40 @@
+---
+- name: WiFi power saving
+  copy:
+    dest: /etc/udev/rules.d/70-wifi_powersave.rules
+    src: 70-wifi_powersave.rules
+
+- name: PCI power control auto
+  copy:
+    dest: /etc/udev/rules.d/80-pci_pm.rules
+    src: 80-pci_pm.rules
+
+- name: USB power save rules (can be done in powertop tunables too)
+  template:
+    dest: /etc/udev/rules.d/50-usb_power_save.rules
+    src: 50-usb_power_save.rules.jinja2
+
+- name: snd_hda_intel power saving
+  modprobe:
+    name: snd_hda_intel
+    params: 'power_save=1'
+
+- name: snd_hda_intel power saving options
+  copy:
+    dest: /etc/modprobe.d/audio_powersave.conf
+    content: "options snd_hda_intel power_save=1\n"
+  notify:
+    - update initramfs
+
+- name: USB autosuspend
+  copy:
+    dest: /etc/modprobe.d/usb-autosuspend.conf
+    content: "options usbcore autosuspend=10\n"
+  notify:
+    - update initramfs
+
+- name: PCIe power save
+  copy:
+    dest: /etc/tmpfiles.d/pcie_aspm.conf
+    content: "w /sys/module/pcie_aspm/parameters/policy - - - - powersave\n"
+

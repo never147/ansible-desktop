@@ -1,24 +1,20 @@
 ---
-- name: Configure postfix via debconf (mailname)
-  debconf:
-   name: postfix
-   question: postfix/mailname
-   value: "{{ ansible_fqdn }}"
-   vtype: string
 
-- name: Configure postfix via debconf (relayhost)
+- name: Configure postfix via debconf
   debconf:
    name: postfix
-   question: postfix/relayhost
-   value: "{{ postfix_relayhost }}"
+   question: item.question
+   value: item.value
    vtype: string
-
-- name: Configure postfix via debconf (main_mailer_type)
-  debconf:
-   name: postfix
-   question: postfix/main_mailer_type
-   value: 'Satellite system'
-   vtype: string
+  loop:
+    - question: postfix/protocols
+      value: ipv4
+    - question: postfix/mailname
+      value: "{{ ansible_fqdn }}"
+    - question: postfix/main_mailer_type
+      value: 'Satellite system'
+  notify:
+    - postfix reload
 
 - name: Install postfix
   apt:

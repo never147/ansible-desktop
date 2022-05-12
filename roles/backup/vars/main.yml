@@ -1,2 +1,17 @@
 ---
 # vars file for backup
+
+default_cache_directories:
+  - "/home/{{ username }}/.config/google-chrome*"
+  - "/home/{{ username }}/.config/slack"
+  - "/home/{{ username }}/.config/Slack"
+  - "/home/{{ username }}/.cache"
+  - "/home/{{ username }}/.dropbox-dist"
+  - "/home/{{ username }}/.local"
+  - "/home/{{ username }}/.rvm"
+  - "/home/{{ username }}/.config/Franz"
+  - "/home/{{ username }}/.m2"
+  - "/home/{{ username }}/.npm"
+  - "/home/{{ username }}/.cinnamon"
+  - "/home/{{ username }}/.debug"
+  - "/home/{{ username }}/.minikube"

@@ -1,4 +1,7 @@
 ---
 - apt:
-    name: librsync-dev
+    name: 
+      - librsync-dev
+      - rclone
+      - restic
     state: present

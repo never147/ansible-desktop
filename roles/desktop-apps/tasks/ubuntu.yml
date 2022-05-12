@@ -11,3 +11,9 @@
   apt:
     state: latest
     name: "{{ desktop_packages[os_distro|lower] }}"
+
+- name: Remove unwanted desktop packages
+  apt:
+    state: absent
+    name: "{{ desktop_packages_unwanted[os_distro|lower] }}"
+

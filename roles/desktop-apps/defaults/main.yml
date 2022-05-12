@@ -29,3 +29,6 @@ desktop_packages:
     - cheese
     - gimp
 
+desktop_packages_unwanted:
+  ubuntu:
+    - flatpak

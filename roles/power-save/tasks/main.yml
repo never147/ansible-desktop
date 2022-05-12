@@ -3,3 +3,8 @@
 - name: Configure laptop power saving measures
   include_tasks: "{{ os_distro | lower }}.yml"
 
+- name: Hardware specific power saving
+  import_tasks: "{{ hardware_profile }}.yml"
+  vars:
+    hardware_profile: "{{ ansible_facts['product_name']|default('default') }}"
+

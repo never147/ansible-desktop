@@ -33,6 +33,7 @@
     - role: backup
       tags:
         - system
+        - backup
     - role: kernel
       tags:
         - kernel
@@ -90,6 +91,7 @@
       tags:
         - system
         - communication
+        - postfix
     - role: power-save
       tags:
         - system

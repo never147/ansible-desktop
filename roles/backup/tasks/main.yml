@@ -2,3 +2,24 @@
 - name: Install and configure backups
   include_tasks: "{{ os_distro | lower }}.yml"
 
+- name: Detect cache directories
+  stat:
+    path: "{{ item }}"
+  register: cache_dirs_stat
+  loop: "{{ default_cache_directories }}"
+
+- name: Set cache directories
+  set_fact:
+    cache_directories: "{{ cache_directories|default([]) + [item.stat.path] }}"
+  loop: "{{ cache_dirs_stat.results }}"
+  when: "{{ item.stat.exists }}"
+
+- name: Mark cache directories with a tag file
+  copy:
+    content: |
+      Signature: 8a477f597d28d172789f06886806bc55
+      \# This file is a cache directory tag created by (application name).
+      \# For information about cache directory tags, see:
+      \#	http://www.brynosaurus.com/cachedir/
+    dest: "{{ item }}/CACHEDIR.TAG"
+  loop: "{{ cache_directories }}"
