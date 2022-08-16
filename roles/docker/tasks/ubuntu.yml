@@ -20,7 +20,7 @@
 - name: Install "{{ docker_package }}"  package
   apt:
     name: "{{ docker_package }}"
-    state: present
+    state: latest
 
 #- name: Hold docker package
 #  command: apt-mark hold "{{ docker_package }}"

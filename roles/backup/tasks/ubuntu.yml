@@ -4,4 +4,4 @@
       - librsync-dev
       - rclone
       - restic
-    state: present
+    state: latest

@@ -16,6 +16,7 @@
 - name: Install vagrant
   apt:
     name: vagrant
+    state: latest
 
 #- name: Get version information from Vagrant site
 #  uri:
