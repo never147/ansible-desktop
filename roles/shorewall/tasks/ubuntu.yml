@@ -16,6 +16,8 @@
     dest: "/etc/shorewall/{{ item }}"
   with_items:
     - interfaces
+  notify:
+    - shorewall reload
 
 - name: Enable shorewall service
   systemd:
