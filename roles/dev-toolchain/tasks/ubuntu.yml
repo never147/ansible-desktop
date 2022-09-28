@@ -37,6 +37,15 @@
     filename: azure-cli
     repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ os_codename }} main"
 
+- name: Github CLI apt key
+  apt_key:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+
+- name: Github CLI apt repo
+  apt_repository:
+    filename: github-cli
+    repo: "deb [arch=amd64] https://cli.github.com/packages stable main"
+
 - name: Installing apt packages for development
   apt:
     name:
@@ -56,6 +65,7 @@
       - maven
       - openjdk-8-jdk
       - azure-cli
+      - gh
     state: latest
 
 - name: Remove obsolete packages
