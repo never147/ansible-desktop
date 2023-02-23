@@ -66,6 +66,7 @@
       - openjdk-8-jdk
       - azure-cli
       - gh
+      - npm
     state: latest
 
 - name: Remove obsolete packages
