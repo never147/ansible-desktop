@@ -1,5 +1,0 @@
----
-# tasks file for mydesktop
-- name: Install mydesktop client
-  include_tasks: "{{ os_distro | lower }}.yml"
-
