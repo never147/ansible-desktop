@@ -23,6 +23,7 @@
     - "3.8"
     - "3.9"
     - "3.10"
+    - "3.11"
 
 - name: Install python
   apt:
@@ -66,7 +67,6 @@
       - openjdk-8-jdk
       - azure-cli
       - gh
-      - npm
     state: latest
 
 - name: Remove obsolete packages
@@ -80,3 +80,20 @@
       - libpython2.7-minimal
     state: absent
   when: os_codename == "focal"
+
+- name: Add Nodesource repo key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+- name: Add Nodesource apt repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://deb.nodesource.com/{{ node_repo }} {{ os_codename }} main"
+    state: present
+    filename: nodesource-{{ node_repo }}
+  vars:
+    node_repo: node_18.x
+
+- name: Install NodeJS
+  apt:
+    name:
+      - nodejs
