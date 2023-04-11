@@ -115,12 +115,12 @@
         - desktop
         - virtual
         - virtualbox
-    - role: yubikey
-      tags:
-        - system
-        - devices
-        - security
-        - yubico
+    #- role: yubikey
+    #  tags:
+    #    - system
+    #    - devices
+    #    - security
+    #    - yubico
     - role: zoom
       tags:
         - zoom
