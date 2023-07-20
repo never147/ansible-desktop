@@ -2,6 +2,7 @@
 - hosts: all
   environment: "{{ proxy_env }}"
   pre_tasks:
+    - setup:
     - set_fact:
         os_distro: "{{ ansible_facts['distribution'] }}"
       tags: always
@@ -71,11 +72,11 @@
     #- role: grub
     #  tags:
     #    - system
-    #- role: hid-apple
-    #  tags:
-    #   - system
-    #     - devices
-    #    - hid-apple
+    - role: hid-apple
+      tags:
+       - system
+         - devices
+        - hid-apple
     - role: icons
       tags:
         - desktop
