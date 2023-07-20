@@ -4,5 +4,9 @@
   include_tasks: "{{ os_distro | lower }}.yml"
 
 - name: Install apple hardware product specific
-  include_tasks: "{{ ansible_facts['product_name'] }}.yml"
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - files:
+      - "{{ ansible_facts['product_name'] }}.yml"
+      skip: true
 
