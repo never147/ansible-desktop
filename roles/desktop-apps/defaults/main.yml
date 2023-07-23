@@ -28,6 +28,7 @@ desktop_packages:
     - bzip2
     - cheese
     - gimp
+    - get-iplayer
 
 desktop_packages_unwanted:
   ubuntu:

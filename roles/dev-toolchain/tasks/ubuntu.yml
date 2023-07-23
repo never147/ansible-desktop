@@ -27,7 +27,7 @@
 
 - name: Install python
   apt:
-    name: "{{ py_versions }}"
+    name: "{{ py_versions + ['python-is-python3'] }}"
 
 - name: Microsoft apt key
   apt_key:
