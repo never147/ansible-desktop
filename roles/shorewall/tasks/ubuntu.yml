@@ -8,7 +8,7 @@
     dest: /etc/shorewall
     src: shorewall.conf/
   notify:
-    - shorewall reload
+    - shorewall restart
 
 - name: Templated files for shorewall
   template:
@@ -17,7 +17,7 @@
   with_items:
     - interfaces
   notify:
-    - shorewall reload
+    - shorewall restart
 
 - name: Enable shorewall service
   systemd:
