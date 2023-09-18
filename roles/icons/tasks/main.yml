@@ -1,5 +1,0 @@
----
-# tasks file for icons
-- name: Install icons
-  include_tasks: "{{ os_distro | lower }}.yml"
-
