@@ -67,6 +67,7 @@
       - openjdk-8-jdk
       - azure-cli
       - gh
+      - retry
     state: latest
 
 - name: Remove obsolete packages

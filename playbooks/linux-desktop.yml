@@ -55,6 +55,7 @@
         - dev-toolchain
     - role: docker
       tags:
+        - docker
         - system
         - virtual
     - role: golang
@@ -77,11 +78,6 @@
        - system
          - devices
         - hid-apple
-    - role: icons
-      tags:
-        - desktop
-        - eyecandy
-        - icons
     - role: jabra
       tags:
         - collaboration

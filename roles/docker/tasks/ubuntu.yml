@@ -1,11 +1,4 @@
 ---
-- name: Check if "{{ docker_package }}" package is already installed
-  shell: dpkg-query -W -f='${Status}' "{{ docker_package }}" | grep 'hold ok installed'
-  register: is_installed
-  failed_when: no
-  changed_when: no
-  check_mode: no
-
 - name: Add key for docker CE packages
   apt_key:
     url: "https://download.docker.com/linux/{{ os_distro }}/gpg"
@@ -17,14 +10,10 @@
     state: present
     filename: docker
 
-- name: Install "{{ docker_package }}"  package
+- name: Install "{{ docker_packages|join(' ') }}"  package
   apt:
-    name: "{{ docker_package }}"
+    name: "{{ docker_packages }}"
     state: latest
-
-#- name: Hold docker package
-#  command: apt-mark hold "{{ docker_package }}"
-#  when: is_installed.rc == 1
 
 - name: Install /etc/default/docker config
   copy:

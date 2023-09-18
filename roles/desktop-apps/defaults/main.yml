@@ -29,6 +29,7 @@ desktop_packages:
     - cheese
     - gimp
     - get-iplayer
+    - htop
 
 desktop_packages_unwanted:
   ubuntu:
