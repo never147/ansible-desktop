@@ -10,7 +10,7 @@ set -e
 
 cd bcwc_pcie
 mkdir -p /usr/src/facetimehd-$version
-cp -r * /usr/src/facetimehd-$version/
+cp -r -- * /usr/src/facetimehd-$version/
 cd /usr/src/facetimehd-$version/
 rm -f backup-*tgz bcwc-pcie_*deb
 make clean
