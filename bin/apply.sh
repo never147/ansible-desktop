@@ -2,14 +2,24 @@
 
 base=$(dirname "$0")/..
 cd "$base" || exit 1
-if [ ! -f "$HOME"/Apps/virtualenvs/home_dir/bin/activate ] ;then
+VENV_DIR=${VENV_DIR:="$HOME"/Apps/virtualenvs/home_dir}
+
+if [ ! -f "$VENV_DIR"/bin/activate ] ;then
     ./bin/bootstrap.sh
 fi
-. "$HOME"/Apps/virtualenvs/home_dir/bin/activate
+. "$VENV_DIR"/bin/activate
+
+(
+  cd "$base"/collections \
+  && ansible-galaxy collection install -p "${VENV_DIR}/collections" -r requirements.yml \
+  && ansible-galaxy role install -p "${VENV_DIR}/roles" -r requirements.yml
+)
 
 # ANSIBLE_COW_SELECTION=none \
 ANSIBLE_CALLBACK_WHITELIST=unixy \
 ANSIBLE_STDOUT_CALLBACK=unixy \
+ANSIBLE_COLLECTIONS_PATHS="$VENV_DIR"/collections \
+ANSIBLE_ROLES_PATH="$VENV_DIR"/roles:"$base"/roles \
 ansible-playbook \
   -e @personal.yml \
   -i inventories/local \

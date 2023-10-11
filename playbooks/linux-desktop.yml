@@ -23,6 +23,12 @@
     - role: security
       tags:
         - security
+    # See what packages are installed in inventories/group_vars/all.yml
+    - role: cimon-io.asdf
+      tags:
+        - desktop
+        - apps
+        - development
     #- role: ansible
     #  tags:
     #    - ansible
