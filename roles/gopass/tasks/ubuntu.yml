@@ -34,6 +34,7 @@
       - git
       - rng-tools
       #- gopass
+      - libsecret-tools
     state: latest
 
 - name: Get gopass version information from Gihub
