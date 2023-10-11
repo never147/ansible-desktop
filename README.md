@@ -22,3 +22,17 @@ Run the `make` command to apply host changes, you need a recent version of Pytho
 
     make
 
+ToDo
+----
+
+Apps yet to be added managed:
+
+* asdf
+* consul
+* kubectl, helm and minikube
+* magic8
+* shellcheck
+* bfg.jar
+* golang
+* terraform
+* pyenv
