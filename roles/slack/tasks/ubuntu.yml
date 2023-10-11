@@ -21,7 +21,7 @@
   apt_repository:
     repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
     state: present
-    filename: slacktechnologies_slack
+    filename: slack
 
 - apt:
     name: "{{ slack_package }}"
