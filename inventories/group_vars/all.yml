@@ -13,18 +13,21 @@ os_codenames:
   una: "focal"
   victoria: "jammy"
 asdf_plugins:
+  - name: awscli
+    versions:
+      - latest
   - name: terraform
     versions:
       - latest
-    global: latest
+  - name: packer
+    versions:
+      - latest
   - name: act
     versions:
       - latest
-    global: latest
   - name: shellcheck
     versions:
       - latest
-    global: latest
 asdf_version: "v0.13.1"
 asdf_user: "{{ username }}"
 asdf_group: "{{ username }}"
