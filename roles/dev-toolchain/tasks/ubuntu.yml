@@ -29,24 +29,6 @@
   apt:
     name: "{{ py_versions + ['python-is-python3'] }}"
 
-- name: Microsoft apt key
-  apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-
-- name: Microsoft azure-cli repo
-  apt_repository:
-    filename: azure-cli
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ os_codename }} main"
-
-- name: Github CLI apt key
-  apt_key:
-    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
-
-- name: Github CLI apt repo
-  apt_repository:
-    filename: github-cli
-    repo: "deb [arch=amd64] https://cli.github.com/packages stable main"
-
 - name: Installing apt packages for development
   apt:
     name:
@@ -65,9 +47,8 @@
       - graphviz
       - maven
       - openjdk-8-jdk
-      - azure-cli
-      - gh
       - retry
+      - clang-format
     state: latest
 
 - name: Remove obsolete packages
@@ -82,19 +63,3 @@
     state: absent
   when: os_codename == "focal"
 
-- name: Add Nodesource repo key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-
-- name: Add Nodesource apt repo
-  apt_repository:
-    repo: "deb [arch=amd64] https://deb.nodesource.com/{{ node_repo }} {{ os_codename }} main"
-    state: present
-    filename: nodesource-{{ node_repo }}
-  vars:
-    node_repo: node_18.x
-
-- name: Install NodeJS
-  apt:
-    name:
-      - nodejs

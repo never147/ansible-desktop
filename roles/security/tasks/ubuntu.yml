@@ -3,4 +3,12 @@
   apt:
     name:
       - debsums
+      - deborphan
+      - unattended-upgrades
+      - libsecret-tools
 
+- name: Enable unattended-upgrades Service
+  service:
+    name: unattended-upgrades
+    state: started
+    enabled: true

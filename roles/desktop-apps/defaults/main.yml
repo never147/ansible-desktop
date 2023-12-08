@@ -1,20 +1,19 @@
 ---
 # defaults file for desktop-apps
 
+desktop_features: []
+
 desktop_packages:
   ubuntu:
-    - spotify-client
-    - sublime-text
     - gnupg
     - keepassx
     - openssh-server
-    - dropbox
     - git
     - jq
     - tree
     - rdesktop
     - remmina
-   # - pdftk
+    # - pdftk
     - dos2unix
     - xul-ext-lightning
     - thunderbird
@@ -28,9 +27,15 @@ desktop_packages:
     - bzip2
     - cheese
     - gimp
-    - get-iplayer
     - htop
+
 
 desktop_packages_unwanted:
   ubuntu:
     - flatpak
+
+desktop_extra_packages:
+  ubuntu:
+    - spotify-client
+    - sublime-text
+    - dropbox

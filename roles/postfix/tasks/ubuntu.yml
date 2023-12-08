@@ -22,43 +22,49 @@
       - postfix
       - mailutils
 
-- name: SASL password directory permissions
-  file:
-    state: directory
-    path: /etc/postfix/sasl
-    owner: postfix
-    mode: 0700
-    #recurse: yes
+- block:
+  - name: SASL password directory permissions
+    file:
+      state: directory
+      path: /etc/postfix/sasl
+      owner: postfix
+      mode: 0700
+      #recurse: yes
+  
+  - name: Configure SASL password
+    copy:
+      content: "{{ postfix_relayhost }} {{ postfix_sasl_user|default('') }}:{{ postfix_sasl_pass|default('') }}\n"
+      dest: /etc/postfix/sasl/passwords
+      mode: 0600
+      owner: postfix
+    notify:
+      - postmap SASL password file
+  
+  - name: SASL password db permissions
+    file:
+      path: /etc/postfix/sasl/passwords.db
+      owner: postfix
+      mode: 0700
+      state: touch
+  
+  - name: SASL auth config
+    blockinfile:
+      path: /etc/postfix/main.cf
+      insertafter: "^relayhost"
+      block: |
+        smtp_sasl_auth_enable = yes
+        smtp_sasl_password_maps = hash:/etc/postfix/sasl/passwords
+        #smtp_sasl_mechanism_filter = digest-md5
+        smtp_sasl_security_options =
+        smtp_tls_wrappermode = yes
+        smtp_tls_security_level = encrypt
+    notify:
+      - postfix reload
 
-- name: Configure SASL password
-  copy:
-    content: "{{ postfix_relayhost }} {{ postfix_sasl_user }}:{{ postfix_sasl_pass }}\n"
-    dest: /etc/postfix/sasl/passwords
-    mode: 0600
-    owner: postfix
-  notify:
-    - postmap SASL password file
+  when: >
+    postfix_sasl_user != ""
+    and postfix_sasl_pass != ""
 
-- name: SASL password db permissions
-  file:
-    path: /etc/postfix/sasl/passwords.db
-    owner: postfix
-    mode: 0700
-    state: touch
-
-- name: SASL auth config
-  blockinfile:
-    path: /etc/postfix/main.cf
-    insertafter: "^relayhost"
-    block: |
-      smtp_sasl_auth_enable = yes
-      smtp_sasl_password_maps = hash:/etc/postfix/sasl/passwords
-      #smtp_sasl_mechanism_filter = digest-md5
-      smtp_sasl_security_options =
-      smtp_tls_wrappermode = yes
-      smtp_tls_security_level = encrypt
-  notify:
-    - postfix reload
 
 - name: MAIL aliases file
   template:

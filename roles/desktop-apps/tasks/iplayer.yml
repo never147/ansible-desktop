@@ -1,0 +1,12 @@
+
+- name: Add get-iplayer ppa
+  apt_repository:
+    repo: ppa:m-grant-prg/utils
+    codename: "{{ os_codename }}"
+    state: present
+    filename: m-grant-prg-utils
+
+- name: Install iplayer
+  apt:
+    name:
+      - get-iplayer
