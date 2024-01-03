@@ -32,14 +32,13 @@
     - name: fs.inotify.max_user_instances
       value: "1048576"
 
-- name: Add xbootldr update scripts
-  copy:
-    dest: "/etc/kernel/{{ item }}.d/objcopy_{{ item }}"
-    src: "objcopy_{{ item }}_hook.sh"
-    owner: root
-    group: root
-    mode: 0755
-  with_items:
-    - postinst
-    - postrm
-
+#- name: Add xbootldr update scripts
+#  copy:
+#    dest: "/etc/kernel/{{ item }}.d/objcopy_{{ item }}"
+#    src: "objcopy_{{ item }}_hook.sh"
+#    owner: root
+#    group: root
+#    mode: 0755
+#  with_items:
+#    - postinst
+#    - postrm
