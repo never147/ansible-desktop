@@ -6,6 +6,7 @@
       - deborphan
       - unattended-upgrades
       - libsecret-tools
+      - plocate
 
 - name: Enable unattended-upgrades Service
   service:
