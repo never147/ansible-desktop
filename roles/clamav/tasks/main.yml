@@ -1,0 +1,26 @@
+---
+
+- name: Install and configure clamav
+  include_tasks: "{{ os_distro | lower }}.yml"
+
+# ClamAV is free, and they have a limit on how many connections we can make in a day before being
+# blocked. To prevent this from happening, we have created a local repo, and we need to configure
+# your version to connect to our repository.
+
+- name: Update database mirror if different
+  lineinfile:
+    path: /etc/clamav/freshclam.conf
+    regex: "^DatabaseMirror"
+    line: "DatabaseMirror {{ clamav_database_mirror }}"
+  when:
+    clamav_database_mirror != 'db.local.clamav.net'
+  notify:
+    - stop clamav-freshclam
+    - run freshclam
+    - start clamav-freshclam
+
+- name: Start and enable clamav service
+  service:
+    name: clamav-freshclam
+    state: started
+    enabled: yes

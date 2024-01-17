@@ -1,0 +1,15 @@
+---
+# handlers file for clamav
+
+- name: stop clamav-freshclam
+  service:
+    name: clamav-freshclam
+    state: stopped
+
+- name: run freshclam
+  command: freshclam
+
+- name: start clamav-freshclam
+  service:
+    name: clamav-freshclam
+    state: started
