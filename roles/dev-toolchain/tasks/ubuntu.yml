@@ -49,6 +49,7 @@
       - openjdk-8-jdk
       - retry
       - clang-format
+      - pipx
     state: latest
 
 - name: Remove obsolete packages
