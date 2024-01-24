@@ -28,6 +28,7 @@ desktop_packages:
     - cheese
     - gimp
     - htop
+    - whois
 
 
 desktop_packages_unwanted:
