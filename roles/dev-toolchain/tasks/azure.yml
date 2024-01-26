@@ -1,0 +1,13 @@
+- name: Microsoft apt key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Microsoft azure-cli repo
+  apt_repository:
+    filename: azure-cli
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ os_codename }} main"
+
+- name: Install
+  apt:
+    name: azure-cli
+

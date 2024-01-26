@@ -1,0 +1,12 @@
+- name: Github CLI apt key
+  apt_key:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+
+- name: Github CLI apt repo
+  apt_repository:
+    filename: github-cli
+    repo: "deb [arch=amd64] https://cli.github.com/packages stable main"
+
+- name: Install GitHub CLI
+  apt:
+    name: gh
