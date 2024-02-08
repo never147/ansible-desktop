@@ -24,5 +24,5 @@ ansible-playbook \
   -e @personal.yml \
   -i inventories/local \
   --ask-become-pass \
-  "playbooks/${ANSIBLE_PLAYBOOK:=linux-desktop.yml}" \
+  "${ANSIBLE_PLAYBOOK:=playbooks/linux-desktop.yml}" \
   "$@"
