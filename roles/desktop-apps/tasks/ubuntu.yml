@@ -7,10 +7,23 @@
     state: present
     filename: mozillateam
 
+- name: Create a fact with a list of packages to install
+  set_fact:
+    all_desktop_packages: "{{
+        desktop_packages[os_distro|lower]
+        |union(desktop_extra_packages[os_distro|lower])
+      }}"
+
+- name: Add spotify repository
+  include_tasks:
+    file: spotify_repo.yml
+  when: >
+    'spotify-client' in all_desktop_packages
+
 - name: Install desktop packages
   apt:
     state: latest
-    name: "{{ desktop_packages[os_distro|lower] }}"
+    name: "{{ all_desktop_packages }}"
 
 - name: Remove unwanted desktop packages
   apt:
