@@ -31,7 +31,7 @@ Apps yet to be added/managed:
 * kubectl, helm and minikube
 * magic8
 * bfg.jar
-* tflint, terragrunt
+* terragrunt
 * pyenv
 * hadolint
 * rclone, restic

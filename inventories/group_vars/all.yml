@@ -28,6 +28,22 @@ asdf_plugins:
   - name: shellcheck
     versions:
       - latest
+  - name: pre-commit
+    versions:
+      - latest
+  - name: tflint
+    versions:
+      - latest
+  - name: tfsec
+    versions:
+      - latest
+  - name: trivy
+    versions:
+      - latest
+  - name: terraform-docs
+    versions:
+      - latest
+
 asdf_version: "v0.13.1"
 asdf_user: "{{ username }}"
 asdf_group: "{{ username }}"
