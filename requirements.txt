@@ -1,5 +1,5 @@
 ansible~=9.4.0
-ansible-core~=2.15.2
+ansible-core~=2.16.0
 beautifulsoup4==4.12.2
 cffi==1.15.1
 cryptography==42.0.4
