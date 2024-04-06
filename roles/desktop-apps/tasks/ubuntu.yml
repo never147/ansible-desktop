@@ -20,6 +20,12 @@
   when: >
     'spotify-client' in all_desktop_packages
 
+- name: Add sublimetext repository
+  include_tasks:
+    file: sublimetext-repo.yml
+  when: >
+    'sublime-text' in all_desktop_packages
+
 - name: Install desktop packages
   apt:
     state: latest
