@@ -4,15 +4,17 @@
   pre_tasks:
     - setup:
     - set_fact:
-        os_distro: "{{ ansible_facts['distribution'] }}"
+        os_distro: "{{ ansible_distribution }}"
       tags: always
     - set_fact:
         os_distro: "ubuntu"
       tags: always
       when: os_distro == "Linux Mint"
     - set_fact:
-        os_codename: "{{ os_codenames[ansible_facts['distribution_release']] }}"
-      when: ansible_facts['distribution_release'] in os_codenames
+        os_codename: "{{
+            os_codenames[ansible_distribution_release]
+            |default(ansible_distribution_release)
+          }}"
       tags: always
     - debug:
         msg: "{{ os_codename }}"
