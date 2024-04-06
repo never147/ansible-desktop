@@ -14,5 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create personal.yml
+      run: |
+        cat >personal.yml <<EOF
+        ---
+        # Postfix email relay config
+        postfix_sasl_user: "$(whoami)@example.com"
+        postfix_sasl_pass: "p@55w0rd"
+        postfix_unix_user: "$(whoami)"
+        postfix_relayhost: "[smtp.example.com]:465"
+        
+        # Home directory files
+        username: $(whoami)
+        EOF
     - name: Run install
       run: make
