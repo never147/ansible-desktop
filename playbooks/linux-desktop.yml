@@ -12,6 +12,7 @@
       when: os_distro == "Linux Mint"
     - set_fact:
         os_codename: "{{ os_codenames[ansible_facts['distribution_release']] }}"
+      when: ansible_facts['distribution_release'] in os_codenames
       tags: always
     - debug:
         msg: "{{ os_codename }}"
