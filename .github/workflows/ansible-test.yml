@@ -28,4 +28,6 @@ jobs:
         username: $(whoami)
         EOF
     - name: Run install
-      run: make
+      run: ./bin/bootstrap.sh
+    - name: Apply
+      run: ./bin/apply.sh --skip-tags "docker,shorewall"
