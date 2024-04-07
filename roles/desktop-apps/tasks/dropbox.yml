@@ -1,0 +1,11 @@
+---
+
+- name: Add dropbox repo key
+  apt_key:
+    url: https://linux.dropbox.com/fedora/rpm-public-key.asc
+    keyring: /etc/apt/trusted.gpg.d/dropbox-archive.gpg
+
+- name: Add dropbox repo
+  apt_repository:
+    repo: "deb https://linux.dropbox.com/ubuntu {{ os_codename }} main"
+    filename: dropbox
