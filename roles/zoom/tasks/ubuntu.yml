@@ -1,7 +1,7 @@
 ---
 - name: Get version information for Zoom site
   uri:
-    url: "https://zoom.us/support/down4j"
+    url: "https://zoom.us/download"
     return_content: yes
     headers:
       User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
@@ -10,7 +10,11 @@
 
 - name: Parse HTML
   set_fact:
-    parsed_html: "{{ zoom_url_output.content | bs4_find('span', {'class': 'linux-ver-text'}) | bs4_text }}"
+    parsed_html: "{{
+        zoom_url_output.content
+        |bs4_find('span', {'class': 'version-detail'})
+        |bs4_text
+      }}"
 
 - name: Set version
   set_fact:
