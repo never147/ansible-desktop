@@ -26,6 +26,12 @@
   when: >
     'sublime-text' in all_desktop_packages
 
+- name: Add dropbox repository
+  include_tasks:
+    file: dropbox-repo.yml
+  when: >
+    'dropbox' in all_desktop_packages
+
 - name: Install desktop packages
   apt:
     state: latest
