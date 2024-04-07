@@ -1,24 +1,21 @@
 ---
-- name: Get version information for Zoom site
-  uri:
-    url: "https://zoom.us/download"
-    return_content: yes
-    headers:
-      User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
-  register: zoom_url_output
-  check_mode: no
+- block:
+  - name: Get version information from download URL
+    uri:
+      url: "{{ zoom_deb_url }}"
+      method: "HEAD"
+    register: zoom_url_output
+    check_mode: no
 
-- name: Parse HTML
-  set_fact:
-    parsed_html: "{{
-        zoom_url_output.content
-        |bs4_find('span', {'class': 'version-detail'})
-        |bs4_text
-      }}"
-
-- name: Set version
-  set_fact:
-    zoom_available_version: "{{ parsed_html.split()[1] }}"
+  - name: Set version
+    set_fact:
+      zoom_available_version: "{{ _redirect_url.split('/')[-2] }}"
+    vars:
+      _redirect_url: "{{ zoom_url_output.url }}"
+- rescue:
+  - name: Fall back version
+    set_fact:
+      zoom_available_version: "Unknown"
 
 - name: Print available version
   debug:
@@ -40,27 +37,3 @@
     deb: "{{ zoom_deb_url }}"
     state: present
   when: zoom_installed_version.stdout != zoom_available_version
-
-#- apt:
-#    name: "{{ item }}"
-#    state: latest
-#  with_items:
-#    - "{{ zoom_package }}"
-#    - libglib2.0-0 
-#    - libgstreamer-plugins-base0.10-0
-#    - libxcb-shape0
-#    - libxcb-shm0
-#    - libxcb-xfixes0
-#    - libxcb-randr0
-#    - libxcb-image0
-#    - libfontconfig1
-#    - libgl1-mesa-glx
-#    - libxi6
-#    - libsm6
-#    - libxrender1
-#    - libpulse0
-#    - libxcomposite1
-#    - libxslt1.1
-#    - libsqlite3-0
-#    - libxcb-keysyms1
-#    - libxcb-xtest0
