@@ -31,4 +31,6 @@ jobs:
     - name: Run install
       run: ./bin/bootstrap.sh
     - name: Apply
-      run: ./bin/apply.sh --skip-tags "docker,shorewall,hid-apple"
+      run: |
+        ./bin/apply.sh \
+          --skip-tags "docker,shorewall,hid-apple,power-save"
