@@ -16,7 +16,7 @@
 
 - name: Add spotify repository
   include_tasks:
-    file: spotify_repo.yml
+    file: spotify-repo.yml
   when: >
     'spotify-client' in all_desktop_packages
 
