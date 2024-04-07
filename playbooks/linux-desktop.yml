@@ -85,8 +85,8 @@
     - role: hid-apple
       tags:
         - system
-          - devices
-          - hid-apple
+        - devices
+        - hid-apple
     - role: jabra
       tags:
         - collaboration
