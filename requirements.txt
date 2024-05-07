@@ -1,4 +1,4 @@
-ansible~=9.4.0
+ansible~=9.5.1
 ansible-core~=2.16.6
 beautifulsoup4==4.12.3
 cffi==1.16.0
