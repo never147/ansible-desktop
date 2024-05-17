@@ -20,6 +20,7 @@
     follow: yes
     state: hard
     force: yes
+  failed_when: false
 
 - name: OpenSC lib link
   file:
@@ -27,4 +28,4 @@
     src: /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so
     state: hard
     force: yes
-
+  failed_when: false

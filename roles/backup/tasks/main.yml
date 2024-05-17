@@ -12,7 +12,7 @@
   set_fact:
     cache_directories: "{{ cache_directories|default([]) + [item.stat.path] }}"
   loop: "{{ cache_dirs_stat.results }}"
-  when: item.stat.exists
+  when: item.stat.exists and item.stat.isdir
 
 - name: Mark cache directories with a tag file
   copy:

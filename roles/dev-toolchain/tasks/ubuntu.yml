@@ -33,7 +33,6 @@
   apt:
     name:
       - build-essential
-      - python3-distutils
       - python3-jsonschema
       - python3-pip
       - python3-setuptools
@@ -50,6 +49,7 @@
       - retry
       - clang-format
       - pipx
+      - python3-argcomplete
     state: latest
 
 - name: Remove obsolete packages
