@@ -10,7 +10,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.10"
 ansible-core = ">=2.15.2,<2.16.0"
-ansible = ">=8.2.0,<8.3.0"
+ansible = ">=8.2.0,<8.8.0"
 beautifulsoup4 = "^4.12.3"
 cffi = "^1.16.0"
 cryptography = "^42.0.7"
