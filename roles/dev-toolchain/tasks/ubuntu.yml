@@ -64,3 +64,6 @@
     state: absent
   when: os_codename == "focal"
 
+- name: Install GitHub CLI
+  include_tasks:
+    file: github.yml
