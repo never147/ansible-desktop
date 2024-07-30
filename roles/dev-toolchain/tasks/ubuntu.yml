@@ -50,6 +50,9 @@
       - clang-format
       - pipx
       - python3-argcomplete
+      - libsasl2-dev
+      - libldap2-dev
+      - libpq-dev
     state: latest
 
 - name: Remove obsolete packages
