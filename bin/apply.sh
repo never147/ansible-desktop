@@ -2,11 +2,15 @@
 
 base=$(dirname "$0")/..
 cd "$base" || exit 1
+export PIPX_HOME="${PIPX_HOME:-"$HOME"/.ansible-desktop/}"
+export PATH="$PIPX_HOME/venvs/poetry/bin:$PATH"
 
-if [ ! -f ~/.local/bin/poetry ] ;then
-    ./bin/bootstrap.sh
+if [ ! -e "${PIPX_HOME}"/venvs/poetry/bin/poetry ] ;then
+    ./bin/bootstrap.sh || exit 1
 fi
+
 poetry install
+
 VENV_DIR=$(poetry env info -p)
 (
   cd "$base"/collections \

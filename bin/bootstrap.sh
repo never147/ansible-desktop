@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 
 sudo apt-get install -y \
   --install-recommends \
@@ -7,8 +7,7 @@ sudo apt-get install -y \
   pipx libffi-dev
 
 mkdir -p ~/.local/bin
-export PATH=$PATH:~/.local/bin
+export PATH="${PIPX_HOME}"/bin:~/.local/bin:"${PATH}"
 
 pipx install poetry
 
-poetry install
