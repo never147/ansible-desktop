@@ -1,10 +1,11 @@
 ---
 
+# FIXME change this so it uses postconf
 - name: Configure postfix via debconf
   debconf:
    name: postfix
-   question: item.question
-   value: item.value
+   question: "{{ item.question }}"
+   value: "{{ item.value }}"
    vtype: string
   loop:
     - question: postfix/protocols
@@ -13,7 +14,10 @@
       value: "{{ ansible_fqdn }}"
     - question: postfix/main_mailer_type
       value: 'Satellite system'
+    - question: postfix/relayhost
+      value: "{{ postfix_relayhost }}"
   notify:
+    - postfix reconfigure
     - postfix reload
 
 - name: Install postfix
@@ -46,6 +50,8 @@
       owner: postfix
       mode: 0700
       state: touch
+    notify:
+      - postmap SASL password file
   
   - name: SASL auth config
     blockinfile:

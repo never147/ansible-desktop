@@ -3,6 +3,9 @@
 - name: postmap SASL password file
   command: "postmap /etc/postfix/sasl/passwords" 
 
+- name: postfix reconfigure
+  command: "dpkg-reconfigure --frontend noninteractive postfix"
+
 - name: postfix reload
   command: "postfix reload"
 
