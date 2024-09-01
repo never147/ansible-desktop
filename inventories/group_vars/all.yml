@@ -16,6 +16,9 @@ asdf_plugins:
   - name: awscli
     versions:
       - latest
+  - name: dive
+    versions:
+      - latest
   - name: terraform
     versions:
       - latest
