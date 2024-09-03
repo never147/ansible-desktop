@@ -14,7 +14,7 @@
 ?FORMAT 2
 ###############################################################################
 #ZONE	INTERFACE	OPTIONS
-{% for interface in ansible_interfaces %}
+{% for interface in ansible_interfaces|sort %}
 {%- if interface not in shorewall_not_net_interfaces and not interface.startswith('veth') %}
 net     {{ interface }} dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
 {% endif -%}

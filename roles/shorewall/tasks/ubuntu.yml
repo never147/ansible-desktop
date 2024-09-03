@@ -24,3 +24,14 @@
     name: shorewall
     enabled: yes
     state: started
+
+- name: Run this role when interfaces come up
+  template:
+    src: "if-up.d.shorewall.jinja2"
+    dest: "/etc/network/if-up.d/shorewall"
+
+- name: Make sure interface up is excutable
+  file:
+    mode: '755'
+    path: "/etc/network/if-up.d/shorewall"
+
