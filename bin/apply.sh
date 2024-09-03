@@ -20,7 +20,6 @@ VENV_DIR=$(poetry env info -p)
       -p "${VENV_DIR}/roles" -r requirements.yml
 )
 
-[ -z "$CI" ] && ANSIBLE_EXTRA_ARGS=("--ask-become-pass")
 
 # ANSIBLE_COW_SELECTION=none \
 ANSIBLE_CALLBACK_WHITELIST=unixy \
@@ -30,6 +29,5 @@ ANSIBLE_ROLES_PATH="$VENV_DIR"/roles:"$base"/roles \
 poetry run ansible-playbook \
   -e @personal.yml \
   -i inventories/local \
-  "${ANSIBLE_EXTRA_ARGS[@]}" \
   "${ANSIBLE_PLAYBOOK:=playbooks/linux-desktop.yml}" \
   "$@"
