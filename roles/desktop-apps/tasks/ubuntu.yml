@@ -42,3 +42,17 @@
     state: absent
     name: "{{ desktop_packages_unwanted[os_distro|lower] }}"
 
+- name: Create a fact with a list of snaps to install
+  set_fact:
+    all_desktop_snaps: "{{
+        desktop_snaps[os_distro|lower]
+        |union(desktop_extra_snaps[os_distro|lower])
+      }}"
+
+- name: Install desktop Snaps
+  snap:
+    name: "{{ all_desktop_snaps }}"
+
+- name: Set Snap options
+  command: snap set core experimental.refresh-app-awareness=true
+
