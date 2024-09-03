@@ -34,4 +34,3 @@
   file:
     mode: '755'
     path: "/etc/network/if-up.d/shorewall"
-
