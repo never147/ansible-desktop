@@ -1,0 +1,15 @@
+---
+
+- name: Package requirements for JetBrains Toolbox
+  package:
+    name:
+      - libfuse2
+      - libxi6
+      - libxrender1
+      - libxtst6
+      - mesa-utils
+      - libfontconfig
+      - libgtk-3-bin
+      - tar
+      - dbus-user-session
+

@@ -1,0 +1,5 @@
+---
+# tasks file for JetBrains
+- name: install JetBrains
+  include_tasks: "{{ os_distro | lower }}.yml"
+
