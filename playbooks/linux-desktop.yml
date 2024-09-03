@@ -143,3 +143,8 @@
         - vagrant
         - development
         - virtual
+    - role: jetbrains
+      tags:
+        - jetbrains
+        - development
+
