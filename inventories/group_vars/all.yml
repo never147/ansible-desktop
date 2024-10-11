@@ -13,25 +13,28 @@ os_codenames:
   una: "focal"
   victoria: "jammy"
 asdf_plugins:
+  - name: act
+    versions:
+      - latest
   - name: awscli
     versions:
       - latest
   - name: dive
     versions:
       - latest
-  - name: terraform
-    versions:
-      - latest
   - name: packer
-    versions:
-      - latest
-  - name: act
     versions:
       - latest
   - name: shellcheck
     versions:
       - latest
   - name: pre-commit
+    versions:
+      - latest
+  - name: terraform-docs
+    versions:
+      - latest
+  - name: terraform
     versions:
       - latest
   - name: tflint
@@ -43,11 +46,11 @@ asdf_plugins:
   - name: trivy
     versions:
       - latest
-  - name: terraform-docs
+  - name: yq
     versions:
       - latest
 
-asdf_version: "v0.13.1"
+asdf_version: "v0.14.1"
 asdf_user: "{{ username }}"
 asdf_group: "{{ username }}"
 asdf_default_tool_versions_file: .tool-versions
