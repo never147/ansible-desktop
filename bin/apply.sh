@@ -12,6 +12,12 @@ fi
 poetry install
 
 VENV_DIR=$(poetry env info -p)
+# export ANSIBLE_COW_SELECTION=none
+export ANSIBLE_CALLBACK_WHITELIST=unixy
+export ANSIBLE_STDOUT_CALLBACK=unixy
+export ANSIBLE_COLLECTIONS_PATH="$VENV_DIR"/collections
+export ANSIBLE_ROLES_PATH="$VENV_DIR"/roles:"$base"/roles
+
 (
   cd "$base"/collections \
   && poetry run ansible-galaxy collection install \
@@ -20,12 +26,6 @@ VENV_DIR=$(poetry env info -p)
       -p "${VENV_DIR}/roles" -r requirements.yml
 )
 
-
-# ANSIBLE_COW_SELECTION=none \
-ANSIBLE_CALLBACK_WHITELIST=unixy \
-ANSIBLE_STDOUT_CALLBACK=unixy \
-ANSIBLE_COLLECTIONS_PATH="$VENV_DIR"/collections \
-ANSIBLE_ROLES_PATH="$VENV_DIR"/roles:"$base"/roles \
 poetry run ansible-playbook \
   -e @personal.yml \
   -i inventories/local \
