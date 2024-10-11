@@ -20,6 +20,7 @@ desktop_packages:
     - ipcalc
     - vim
     - dmenu
+    - xclip
     - xsel
     - screen
     - at
