@@ -3,3 +3,9 @@
 shorewall_not_net_interfaces:
   - lo
   - docker0
+  - vboxnet0
+
+shorewall_interface_up_scripts:
+  - "/etc/network/if-up.d/shorewall"
+  - "/etc/NetworkManager/dispatcher.d/99-shorewall.sh"
+

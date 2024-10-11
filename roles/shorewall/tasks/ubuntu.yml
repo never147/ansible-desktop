@@ -25,12 +25,29 @@
     enabled: yes
     state: started
 
-- name: Run this role when interfaces come up
+- name: Make leading directory for interface up scripts
+  file:
+    state: directory
+    owner: root
+    group: root
+    mode: '775'
+    path: "{{ item|dirname }}"
+  loop: "{{ shorewall_interface_up_scripts }}"
+
+- name: Run this role when interfaces come up (if-up.d)
   template:
     src: "if-up.d.shorewall.jinja2"
     dest: "/etc/network/if-up.d/shorewall"
 
-- name: Make sure interface up is excutable
+- name: Run this role when interfaces come up (NetworkManager)
+  template:
+    src: "dispatcher-d.shorewall.jinja2"
+    dest: "/etc/NetworkManager/dispatcher.d/99-shorewall.sh"
+
+- name: Make sure interface up is executable
   file:
+    owner: root
+    group: root
     mode: '755'
-    path: "/etc/network/if-up.d/shorewall"
+    path: "{{ item }}"
+  loop: "{{ shorewall_interface_up_scripts }}"
