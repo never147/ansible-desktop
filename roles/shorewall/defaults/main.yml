@@ -9,3 +9,8 @@ shorewall_interface_up_scripts:
   - "/etc/network/if-up.d/shorewall"
   - "/etc/NetworkManager/dispatcher.d/99-shorewall.sh"
 
+shorewall_logfile_distro:
+  RedHat: /var/log/messages
+  Debian: /var/log/syslog
+
+shorewall_logfile: "{{ shorewall_logfile_distro[ansible_os_family] }}"

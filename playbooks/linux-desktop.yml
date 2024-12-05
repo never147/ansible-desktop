@@ -104,10 +104,6 @@
         - devices
         - power-save
     - role: shorewall
-      tags:
-        - system
-        - security
-        - shorewall
     - role: slack
       tags:
         - apps

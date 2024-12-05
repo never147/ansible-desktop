@@ -1,23 +1,9 @@
 ---
 - name: Install shorewall package
   apt:
-    name: shorewall
-
-- name: Shorewall config
-  copy:
-    dest: /etc/shorewall
-    src: shorewall.conf/
-  notify:
-    - shorewall restart
-
-- name: Templated files for shorewall
-  template:
-    src: "{{ item }}.jinja2"
-    dest: "/etc/shorewall/{{ item }}"
-  with_items:
-    - interfaces
-  notify:
-    - shorewall restart
+    name:
+      - shorewall
+      - ipset
 
 - name: Enable shorewall service
   systemd:

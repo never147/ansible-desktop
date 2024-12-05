@@ -1,0 +1,22 @@
+---
+
+- name: Shorewall config
+  copy:
+    dest: /etc/shorewall
+    src: shorewall.conf/
+  notify:
+    - shorewall restart
+  tags:
+    - shorewall_config
+
+- name: Templated files for shorewall
+  template:
+    src: "{{ item }}.jinja2"
+    dest: "/etc/shorewall/{{ item }}"
+  with_items:
+    - interfaces
+    - shorewall.conf
+  notify:
+    - shorewall restart
+  tags:
+    - shorewall_config
