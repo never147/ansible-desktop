@@ -33,4 +33,4 @@ jobs:
     - name: Apply
       run: |
         ./bin/apply.sh \
-          --skip-tags "docker,shorewall,hid-apple,power-save"
+          --skip-tags "docker,shorewall,shorewall_config,hid-apple,power-save"
