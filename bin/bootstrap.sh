@@ -6,8 +6,5 @@ sudo apt-get install -y \
   python3-full python3-dev \
   pipx libffi-dev
 
-mkdir -p ~/.local/bin
-export PATH="${PIPX_HOME}"/bin:~/.local/bin:"${PATH}"
-
 pipx install poetry
 
