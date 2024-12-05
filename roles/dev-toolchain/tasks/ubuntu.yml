@@ -45,6 +45,7 @@
       - lmodern
       - graphviz
       - maven
+      - npm
       - openjdk-8-jdk
       - retry
       - clang-format
@@ -54,6 +55,13 @@
       - libldap2-dev
       - libpq-dev
     state: latest
+
+- name: Install npm packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - markdown-table-formatter
 
 - name: Remove obsolete packages
   apt:
