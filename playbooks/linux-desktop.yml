@@ -26,6 +26,10 @@
     - role: security
       tags:
         - security
+    - role: authnz
+      tags:
+        - authnz
+        - security
     # See what packages are installed in inventories/group_vars/all.yml
     - role: cimon-io.asdf
       tags:

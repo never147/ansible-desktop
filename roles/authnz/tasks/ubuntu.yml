@@ -1,0 +1,11 @@
+---
+
+- name: Install packages for authnz
+  apt:
+    name:
+      - freeipa-client
+      - krb5-user
+      - libpam-ccreds
+      - samba
+      - sssd
+      - sssd-tools
