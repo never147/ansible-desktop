@@ -3,8 +3,11 @@
 # curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
 - name: Add spotify repo key
   apt_key:
-    url: https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg
+    url: "https://download.spotify.com/debian/pubkey_{{ item }}.gpg"
     keyring: /etc/apt/trusted.gpg.d/spotify.gpg
+  loop:
+    - C85668DF69375001
+    - 6224F9941A8AA6D1
 
 #echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 - name: Add spotify repo
