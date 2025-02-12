@@ -14,14 +14,12 @@
 ?FORMAT 2
 ###############################################################################
 #ZONE	INTERFACE	OPTIONS
-{% for interface in ansible_interfaces|sort %}
-{#{% if interface.startswith('veth') %}#}
-{#dckr    {{ interface }} dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0#}
+{% for interface in shorewall_interfaces|sort %}
 {% if interface.startswith('vpn') or interface.startswith('cscotun') %}
 vpn     {{ interface }} dhcp,tcpflags,nosmurfs
 {% elif interface not in shorewall_not_net_interfaces and not interface.startswith('veth') %}
 net     {{ interface }} dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
 {% endif -%}
 {% endfor %}
-{#dckr    docker0     dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0#}
-vbox    vboxnet0    dhcp,tcpflags,nosmurfs
+dckr    docker0     bridge
+vbox    vboxnet+    dhcp,tcpflags,nosmurfs

@@ -1,5 +1,12 @@
 ---
 # defaults file for shorewall
+
+shorewall_use_ansible_interfaces: no
+shorewall_interfaces:
+  - en+
+  - wl+
+  - vpn+
+
 shorewall_not_net_interfaces:
   - lo
   - docker0

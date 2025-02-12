@@ -1,11 +1,5 @@
 ---
 # tasks file for shorewall
-- name: Install shorewall
-  include_tasks: "{{ os_distro | lower }}.yml"
-  tags:
-    - system
-    - security
-    - shorewall
 
 - name: Configure shorewall
   include_tasks: config.yml
@@ -13,3 +7,10 @@
     - system
     - security
     - shorewall_config
+
+- name: Install shorewall
+  include_tasks: "{{ os_distro | lower }}.yml"
+  tags:
+    - system
+    - security
+    - shorewall

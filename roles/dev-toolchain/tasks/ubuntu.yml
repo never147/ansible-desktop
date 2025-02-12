@@ -48,6 +48,7 @@
       - npm
       - openjdk-8-jdk
       - retry
+      - ripgrep
       - clang-format
       - pipx
       - python3-argcomplete

@@ -12,17 +12,15 @@
 # For information about entries in this file, type "man shorewall-policy"
 ###############################################################################
 #SOURCE		DEST		POLICY		LOG LEVEL	LIMIT:BURST
-$FW		vpn		ACCEPT
-vpn	    $FW 	ACCEPT
-$FW		net		ACCEPT
-dckr    $FW     ACCEPT
 $FW     dckr    ACCEPT
-dckr    net     ACCEPT
-dckr    vpn     ACCEPT
-vpn     dckr    ACCEPT
-vbox    $FW     ACCEPT
+$FW	    net	    ACCEPT
 $FW     vbox    ACCEPT
+$FW	    vpn	    ACCEPT
+dckr    all     ACCEPT
+vbox    $FW     ACCEPT
 vbox    net     ACCEPT
-net		all		DROP		info
+#vpn    $FW     ACCEPT
+#vpn    dckr    ACCEPT
+net	    all	    DROP    info
 # The FOLLOWING POLICY MUST BE LAST
-all		all		REJECT		info
+all     all     REJECT  info

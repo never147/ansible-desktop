@@ -1,5 +1,10 @@
 ---
 
+- name: Set fact with list of interfaces
+  set_fact:
+      shorewall_interfaces: "{{ ansible_interfaces }}"
+  when: shorewall_use_ansible_interfaces
+
 - name: Shorewall config
   copy:
     dest: /etc/shorewall
