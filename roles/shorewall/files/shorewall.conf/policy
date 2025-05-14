@@ -20,7 +20,7 @@ dckr    all     ACCEPT
 vbox    $FW     ACCEPT
 vbox    net     ACCEPT
 #vpn    $FW     ACCEPT
-#vpn    dckr    ACCEPT
+vpn    dckr    ACCEPT
 net	    all	    DROP    info
 # The FOLLOWING POLICY MUST BE LAST
 all     all     REJECT  info
