@@ -7,7 +7,6 @@
     keyring: /etc/apt/trusted.gpg.d/spotify.gpg
   loop:
     - C85668DF69375001
-    - 6224F9941A8AA6D1
 
 #echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 - name: Add spotify repo
