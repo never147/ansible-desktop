@@ -5,10 +5,9 @@
       - network-manager-openconnect
       - network-manager-openconnect-gnome
 
-#- name: Import Network Manager config
-#  command: nmcli connection import type openvpn file files/standard_vpn.conf
-
 - name: Disable Network manager connection check
   copy:
     dest: /etc/NetworkManager/conf.d/20-connectivity-ubuntu.conf
-    content: ''
+    content: |
+      [connectivity]
+      enabled=false

@@ -1,4 +1,3 @@
 ---
 # defaults file for golang
 golang_package: golang
-golang_package_version: 1.22

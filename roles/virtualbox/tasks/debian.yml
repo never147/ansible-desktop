@@ -1,13 +1,14 @@
 ---
-#- name: Add apt key for virtual box
-#  apt_key:
-#    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+- name: Add apt key for virtual box
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
 
-- name: disable virtual box repository
+- name: Enable Oracle VirtualBox repository
   apt_repository:
     filename: virtualbox
     repo: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ os_codename }} contrib"
-    state: absent
+    state: present
 
 - name: Pre-accept license agreement
   debconf:
@@ -19,8 +20,8 @@
 - name: Install virtualbox packages
   apt:
     name:
-      - virtualbox
-      - virtualbox-qt
+      - virtualbox-7.0
       - virtualbox-guest-additions-iso
       - virtualbox-ext-pack
       - bridge-utils
+    state: latest

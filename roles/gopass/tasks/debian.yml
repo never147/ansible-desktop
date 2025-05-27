@@ -37,7 +37,7 @@
       - libsecret-tools
     state: latest
 
-- name: Get gopass version information from Gihub
+- name: Get gopass version information from GitHub
   uri:
     url: "https://github.com/gopasspw/gopass/releases/latest"
     return_content: yes
@@ -47,17 +47,23 @@
   register: gopass_url_response
   check_mode: no
 
-- block:
-    - name: Set version
+- name: Initialize available version fact
+  set_fact:
+    gopass_available_version: null
+
+- name: Extract gopass version from valid GitHub URL
+  block:
+    - name: Set version from GitHub redirect
       set_fact:
         gopass_available_version: "{{ gopass_url_response.url.split('/')[-1].strip('v') }}"
-  rescue:
-    - name: No version info
+    - name: Debug extracted version
       debug:
-        msg: "No version info found for gopass"
-    - name: Set null version
-      set_fact:
-        gopass_available_version: null
+        msg: "Successfully extracted gopass_available_version: {{ gopass_available_version }}"
+  when: gopass_url_response.url is defined and gopass_url_response.url is not none and '/releases/tag/' in gopass_url_response.url
+  rescue:
+    - name: Log version extraction failure
+      debug:
+        msg: "Could not extract version from URL {{ gopass_url_response.url if gopass_url_response.url is defined else 'undefined' }}. Will rely on apt for potential upgrade or install."
 
 - name: Print available version
   debug:
@@ -81,6 +87,5 @@
 - name: Install if newer version available
   apt:
     deb: "https://github.com/gopasspw/gopass/releases/download/v{{ gopass_available_version }}/gopass_{{ gopass_available_version }}_linux_amd64.deb"
-  when: gopass_installed_version.stdout == '' or
-        gopass_available_version is version(gopass_installed_version.stdout, '>')
+  when: gopass_available_version and gopass_available_version != "" and (gopass_installed_version.stdout == '' or gopass_available_version is version(gopass_installed_version.stdout, '>'))
 

@@ -83,9 +83,6 @@
         - desktop
         - apps
         - gopass
-    #- role: grub
-    #  tags:
-    #    - system
     - role: hid-apple
       tags:
         - system
@@ -134,10 +131,6 @@
         - apps
         - desktop
         - collaboration
-    #- role: chef
-    #  tags:
-    #    - chef
-    #    - development
     - role: vagrant
       tags:
         - vagrant
