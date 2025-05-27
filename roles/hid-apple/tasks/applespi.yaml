@@ -32,7 +32,6 @@
 
 - name: DKMS install Mac HID
   command: dkms install -m applespi -v 0.1
-  #when: ansible_kernel | version_compare('5', '<')
 
 - name: udevadmin version
   command: udevadm --version

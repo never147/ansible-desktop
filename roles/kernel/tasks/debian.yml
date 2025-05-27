@@ -1,22 +1,4 @@
 ---
-- name: HWE Xorg
-  apt:
-    name:
-      - xserver-xorg-hwe-18.04
-      - xwayland-hwe-18.04
-    install_recommends: yes
-    state: latest
-  when: os_codename == "bionic"
-
-- name: Purge HWE kernels
-  apt:
-    name:
-      - linux-generic-hwe-18.04
-      - linux-headers-generic-hwe-18.04
-      - linux-image-generic-hwe-18.04
-    state: absent
-    purge: yes
-
 - name: Inotify tweak
   sysctl:
     name: "{{ item.name }}"
