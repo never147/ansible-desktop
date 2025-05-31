@@ -1,7 +1,7 @@
 ---
 # tasks file for Apple hardware
 - name: OS common
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
 
 - name: Install apple hardware product specific
   include_tasks: "{{ item }}"

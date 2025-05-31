@@ -1,7 +1,7 @@
 ---
 # tasks file for power-save
 - name: Configure laptop power saving measures
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
 
 - name: Hardware specific power saving
   include_tasks: "{{ item }}"

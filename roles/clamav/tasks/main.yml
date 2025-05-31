@@ -1,7 +1,7 @@
 ---
 
 - name: Install and configure clamav
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
 
 # ClamAV is free, and they have a limit on how many connections we can make in a day before being
 # blocked. To prevent this from happening, we have created a local repo, and we need to configure

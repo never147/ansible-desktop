@@ -26,6 +26,6 @@ fi
 
 poetry run ansible-playbook \
   -e @personal.yml \
-  -i inventories/local \
+  -i "${ANSIBLE_INVENTORY:=inventories/local}" \
   "${ANSIBLE_PLAYBOOK:=playbooks/linux-desktop.yml}" \
   "$@"

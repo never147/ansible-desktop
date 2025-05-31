@@ -4,6 +4,7 @@
     name:
       - debsums
       - deborphan
+      - gpg
       - unattended-upgrades
       - libsecret-tools
       - plocate

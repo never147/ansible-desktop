@@ -1,6 +1,6 @@
 ---
 - name: Install and configure backups
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
 
 - name: Detect cache directories
   stat:

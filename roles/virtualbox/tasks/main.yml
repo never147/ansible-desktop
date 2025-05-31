@@ -1,5 +1,5 @@
 ---
 # tasks file for virtualbox
 - name: Install virtualbox
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
 

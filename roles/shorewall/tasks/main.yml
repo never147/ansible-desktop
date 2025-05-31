@@ -9,7 +9,7 @@
     - shorewall_config
 
 - name: Install shorewall
-  include_tasks: "{{ os_distro | lower }}.yml"
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
   tags:
     - system
     - security
