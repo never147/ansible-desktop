@@ -10,12 +10,12 @@
 - name: Set python versions
   set_fact:
     py_versions: "{{
-      py_versions|default([]) + [
-        'python' + item,
-        'python' + item + '-dev',
-        'python' + item + '-venv'
-      ]
-    }}"
+        py_versions|default([]) + [
+          'python' + item,
+          'python' + item + '-dev',
+          'python' + item + '-venv'
+        ]
+      }}"
   with_items:
     - "3"
     - "3.8"
