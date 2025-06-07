@@ -8,7 +8,7 @@
 
 - name: Google package signing key
   apt_key:
-    url: http://dl-ssl.google.com/linux/linux_signing_key.pub
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
 
 - name: Google package repo
   apt_repository:

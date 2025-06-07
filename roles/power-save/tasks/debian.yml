@@ -5,18 +5,6 @@
     value: "0"
     sysctl_file: /etc/sysctl.d/10-disable_watchdog.conf
 
-- name: disable dirty writes
-  sysctl:
-    name: vm.dirty_writeback_centisecs
-    value: "6000"
-    sysctl_file: /etc/sysctl.d/10-dirty.conf
-
-- name: laptop mode
-  sysctl:
-    name: vm.laptop_mode
-    value: "5"
-    sysctl_file: /etc/sysctl.d/10-laptop.conf
-
 - name: Swappiness
   sysctl:
     name: vm.swappiness
@@ -31,22 +19,20 @@
 #####################
 # TLP
 #####################
-#
-#- name: Add tlp apt repo
-#  apt_repository: 
-#    repo: ppa:linrunner/tlp/ubuntu
-#    codename: "{{ os_codename }}"
-#
-#- name: Install tlp
-#  apt:
-#    name: tlp
-#    state: latest
+
+- name: Add tlp apt repo
+  apt_repository:
+    repo: ppa:linrunner/tlp
+    codename: "{{ os_codename }}"
+
+- name: Install tlp
+  apt:
+    name:
+      - tlp
+      - tlp-rdw
+    state: latest
 
 #####################
-
-- name: Install tuned
-  apt:
-    name: tuned
 
 - name: Install powertop
   apt:
