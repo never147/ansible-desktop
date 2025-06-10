@@ -1,3 +1,6 @@
 ---
 # vars file for slack
 slack_package: slack-desktop
+
+slack_keyring: /etc/apt/trusted.gpg.d/slack-desktop.gpg
+slack_repo: "https://packagecloud.io/slacktechnologies/slack/debian"

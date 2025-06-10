@@ -1,5 +1,16 @@
 ---
-- name: Install Slack from latest .deb
+
+- name: Install slack apt key
+  apt_key:
+    url: https://packagecloud.io/slacktechnologies/slack/gpgkey
+    keyring: "{{ slack_keyring }}"
+
+- name: Setup slack debian repo
+  apt_repository:
+    repo: "deb {{ slack_repo }}/ jessie main"
+    filename: slack
+
+- name: Install Slack
   apt:
-    deb: "https://downloads.slack-edge.com/linux_releases/slack-desktop-latest-amd64.deb"
-    state: present
+    name: slack-desktop
+
