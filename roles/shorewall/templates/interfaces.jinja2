@@ -21,5 +21,7 @@ vpn     {{ interface }} dhcp,tcpflags,nosmurfs
 net     {{ interface }} dhcp,tcpflags,logmartians,nosmurfs,sourceroute=0
 {% endif -%}
 {% endfor %}
+vpn     secure      dhcp,tcpflags,nosmurfs
 dckr    docker0     bridge
+dckr	br+
 vbox    vboxnet+    dhcp,tcpflags,nosmurfs
