@@ -3,4 +3,5 @@
 docker_packages: 
   - docker-ce
   - golang-docker-credential-helpers
+  - skopeo
 #docker_version: 17.06.2~ce-0~ubuntu

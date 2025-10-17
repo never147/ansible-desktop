@@ -55,6 +55,8 @@
       - libsasl2-dev
       - libldap2-dev
       - libpq-dev
+      - valgrind
+      - smem
     state: latest
 
 - name: Install npm packages
