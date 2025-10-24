@@ -19,7 +19,7 @@ packaging = "^25.0"
 pycparser = "^2.22"
 pyyaml = "^6.0.2"
 resolvelib = "^1.0.1"
-soupsieve = "^2.7"
+soupsieve = "^2.8"
 
 
 [build-system]
