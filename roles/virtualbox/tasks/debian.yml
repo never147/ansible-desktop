@@ -10,18 +10,9 @@
     repo: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ os_codename }} contrib"
     state: present
 
-- name: Pre-accept license agreement
-  debconf:
-    name: virtualbox-ext-pack
-    question: virtualbox-ext-pack/license
-    value: 'true'
-    vtype: boolean
-
 - name: Install virtualbox packages
   apt:
     name:
-      - virtualbox-7.0
-      - virtualbox-guest-additions-iso
-      - virtualbox-ext-pack
+      - virtualbox-7.2
       - bridge-utils
     state: latest
