@@ -442,21 +442,20 @@ files = [
 
 [[package]]
 name = "resolvelib"
-version = "1.0.1"
+version = "1.2.1"
 description = "Resolve abstract dependencies into concrete ones"
 optional = false
-python-versions = "*"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "resolvelib-1.0.1-py2.py3-none-any.whl", hash = "sha256:d2da45d1a8dfee81bdd591647783e340ef3bcb104b54c383f70d422ef5cc7dbf"},
-    {file = "resolvelib-1.0.1.tar.gz", hash = "sha256:04ce76cbd63fded2078ce224785da6ecd42b9564b1390793f64ddecbe997b309"},
+    {file = "resolvelib-1.2.1-py3-none-any.whl", hash = "sha256:fb06b66c8da04172d9e72a21d7d06186d8919e32ae5ab5cdf5b9d920be805ac2"},
+    {file = "resolvelib-1.2.1.tar.gz", hash = "sha256:7d08a2022f6e16ce405d60b68c390f054efcfd0477d4b9bd019cc941c28fad1c"},
 ]
 
 [package.extras]
-examples = ["html5lib", "packaging", "pygraphviz", "requests"]
-lint = ["black", "flake8", "isort", "mypy", "types-requests"]
+lint = ["mypy", "ruff", "types-requests"]
 release = ["build", "towncrier", "twine"]
-test = ["commentjson", "packaging", "pytest"]
+test = ["packaging", "pytest"]
 
 [[package]]
 name = "soupsieve"
@@ -485,4 +484,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "a8b22e54fff4fba87e36392a567acbe916436a1194354bc21bb88ea0be78b760"
+content-hash = "897f8d6af829cc6e93edb4961ec861824cecd634e9c5a6fd3f951fdf98895e34"

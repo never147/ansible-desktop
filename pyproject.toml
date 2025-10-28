@@ -18,7 +18,7 @@ markupsafe = "^3.0.3"
 packaging = "^25.0"
 pycparser = "^2.23"
 pyyaml = "^6.0.3"
-resolvelib = "^1.0.1"
+resolvelib = "^1.2.1"
 soupsieve = "^2.8"
 
 
