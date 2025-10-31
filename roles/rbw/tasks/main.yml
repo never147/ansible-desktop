@@ -1,0 +1,4 @@
+---
+# tasks file for rbw
+- name: Install rbw (unofficial Bitwarden CLI)
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
