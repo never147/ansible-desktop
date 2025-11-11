@@ -83,6 +83,15 @@
         - desktop
         - apps
         - gopass
+    #- role: grub
+    #  tags:
+    #    - system
+    - role: rbw
+      tags:
+        - security
+        - desktop
+        - apps
+        - rbw
     - role: hid-apple
       tags:
         - system
