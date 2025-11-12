@@ -1,0 +1,26 @@
+---
+- name: Ensure dependencies for OCI CLI are present
+  apt:
+    name:
+      - python3-pip  # pip is often used by the CLI or for updates
+      - python3-venv # Good for isolating CLI dependencies if its installer uses it
+    state: present
+
+- name: Download OCI CLI install script
+  get_url:
+    url: https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+    dest: /tmp/oci_install.sh
+    mode: '0755'
+
+- name: Run OCI CLI install script
+  command: bash /tmp/oci_install.sh --accept-all-defaults --no-optional-deps
+  args:
+    creates: "{{ ansible_env.HOME }}/lib/oracle-cli/bin/oci" # Default install location for user's bin
+  environment:
+    # The script might prompt for these if not running completely unattended by flags alone
+    OCI_CLI_ACCEPT_ALL_DEFAULTS: "true"
+
+- name: Clean up OCI CLI install script
+  file:
+    path: /tmp/oci_install.sh
+    state: absent
