@@ -1,28 +1,16 @@
 ---
-#- name: Check if slack package is already installed
-#  shell: dpkg-query -W -f='${Status}' "{{ slack_package }}" | grep 'install ok installed'
-#  register: is_installed
-#  failed_when: no
-#  changed_when: no
-#  check_mode: no
 
-#- name: Install slack from upstream deb package
-#  apt:
-#    deb: "{{ slack_deb_url }}"
-#    state: present
-#  when: is_installed.rc == 1
-
-- name: Install apt key
+- name: Install slack apt key
   apt_key:
-    url: "https://packagecloud.io/slacktechnologies/slack/gpgkey"
-    state: present
+    url: https://packagecloud.io/slacktechnologies/slack/gpgkey
+    keyring: "{{ slack_keyring }}"
 
-- name: Add slack apt repo
+- name: Setup slack debian repo
   apt_repository:
-    repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
-    state: present
+    repo: "deb {{ slack_repo }}/ jessie main"
     filename: slack
 
-- apt:
-    name: "{{ slack_package }}"
-    state: latest
+- name: Install Slack
+  apt:
+    name: slack-desktop
+

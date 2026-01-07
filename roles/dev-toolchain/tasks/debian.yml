@@ -23,7 +23,6 @@
     - "3.10"
     - "3.11"
     - "3.12"
-    - "3.13"
 
 - name: Install python
   apt:
@@ -45,8 +44,7 @@
       - lmodern
       - graphviz
       - maven
-      - npm
-      - openjdk-8-jdk
+      - openjdk-17-jdk
       - retry
       - ripgrep
       - clang-format
@@ -81,3 +79,11 @@
 - name: Install GitHub CLI
   include_tasks:
     file: github.yml
+
+- name: Install Azure CLI
+  include_tasks:
+    file: azure.yml
+
+- name: Install Node.js and npm
+  include_tasks:
+    file: nodejs.yml

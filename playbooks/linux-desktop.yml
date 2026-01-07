@@ -140,10 +140,6 @@
         - apps
         - desktop
         - collaboration
-    #- role: chef
-    #  tags:
-    #    - chef
-    #    - development
     - role: vagrant
       tags:
         - vagrant

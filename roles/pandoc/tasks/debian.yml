@@ -1,60 +1,53 @@
 ---
-- name: Get version information from {{ name }} site
+- name: "Get latest release information for {{ name }}"
   uri:
     url: "{{ download_page }}"
     return_content: yes
     headers:
       User-Agent: "Mozilla/5.0 (X11; Linux x86_64)"
-  register: pandoc_url_output
+  register: pandoc_latest_release_info
   check_mode: no
 
-- name: Parse HTML
+- name: "Extract available {{ name }} version"
   set_fact:
-    vagrant_deb_url: "{{ pandoc_url_output.content | bs4_find('details', {'class': 'Details-element'}) }}"
+    pandoc_available_version: "{{ pandoc_latest_release_info.url.split('/')[-1] | regex_replace('^v', '') if pandoc_latest_release_info.url is defined and pandoc_latest_release_info.url is not none else '' }}"
 
-- name: Parsed HTML contents
+- name: "Print available {{ name }} version"
   debug:
-    msg: "{{ vagrant_deb_url }}"
+    msg: "The available {{ name }} version is {{ pandoc_available_version }}"
+  when: pandoc_available_version != ""
 
-- name: Set version
+- name: "Construct {{ name }} .deb download URL"
   set_fact:
-    vagrant_available_version: "{{ vagrant_deb_url.split('/')[-2] }}"
+    pandoc_deb_url: "https://github.com/jgm/{{ name }}/releases/download/{{ pandoc_available_version }}/{{ name }}-{{ pandoc_available_version }}-1_amd64.deb"
+  when: pandoc_available_version != ""
 
-- name: Print available version
+- name: "Print {{ name }} .deb URL"
   debug:
-    msg: "The available vagrant version is {{ vagrant_available_version }}"
+    msg: "The {{ name }} .deb URL is {{ pandoc_deb_url }}"
+  when: pandoc_deb_url is defined
 
-- name: Check if current vagrant version is already installed
-  shell: "dpkg-query -W -f='${Version}' {{ vagrant_package }}"
-  register: vagrant_installed
-  failed_when: no
-  changed_when: no
+- name: "Check installed {{ name }} version"
+  command: "dpkg-query -W -f='${Version}' {{ name }}"
+  register: pandoc_installed_dpkg_query
+  failed_when: false
+  changed_when: false
   check_mode: no
 
-- name: Strip the epoch from the installed version string
+- name: "Set installed {{ name }} version fact"
   set_fact:
-    vagrant_installed_version: "{{ vagrant_installed.stdout | replace('1:', '') }}"
+    pandoc_installed_version: "{{ pandoc_installed_dpkg_query.stdout if pandoc_installed_dpkg_query.rc == 0 else '' }}"
 
-- name: Print installed version
+- name: "Print installed {{ name }} version"
   debug:
-    msg: "The installed vagrant version is {{ vagrant_installed_version }}"
+    msg: "The installed {{ name }} version is {{ pandoc_installed_version }}"
+  when: pandoc_installed_version != ""
 
-- name: Install vagrant from upstream deb package
+- name: "Install {{ name }} from upstream deb package"
   apt:
-    deb: "{{ vagrant_deb_url }}"
+    deb: "{{ pandoc_deb_url }}"
     state: present
-  when: vagrant_installed_version != vagrant_available_version
-
-#- name: "Install {{ vagrant_package }} version {{ vagrant_package_version }} package"
-#- name: "Install {{ vagrant_package }} package"
-#  apt:
-    #name: "{{ vagrant_package }}={{ vagrant_package_version }}"
-#    name: "{{ vagrant_package }}"
-#    state: latest
-#  when: vagrant_is_installed.rc == 1
-#  register: vagrant_is_installed
-#  check_mode: no
-
-# - name: Hold vagrant package
-#   command: apt-mark hold "{{ vagrant_package }}"
-#   when: vagrant_is_installed.rc == 1
+  when:
+    - pandoc_available_version != ""
+    - pandoc_deb_url is defined
+    - pandoc_installed_version == "" or (pandoc_available_version != (pandoc_installed_version | regex_replace('^\\d+:', '')))
