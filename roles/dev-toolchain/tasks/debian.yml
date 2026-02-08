@@ -16,14 +16,7 @@
           'python' + item + '-venv'
         ]
       }}"
-  with_items:
-    - "3"
-    - "3.8"
-    - "3.9"
-    - "3.10"
-    - "3.11"
-    - "3.12"
-    - "3.13"
+  with_items: "{{ dev_toolchain_python_versions }}"
 
 - name: Install python
   apt:
@@ -31,32 +24,7 @@
 
 - name: Installing apt packages for development
   apt:
-    name:
-      - build-essential
-      - python3-jsonschema
-      - python3-pip
-      - python3-setuptools
-      - debhelper
-      - pandoc
-      - texlive-latex-base
-      - texlive-fonts-recommended
-      - texlive-extra-utils
-      - texlive-latex-extra
-      - lmodern
-      - graphviz
-      - maven
-      - npm
-      - openjdk-8-jdk
-      - retry
-      - ripgrep
-      - clang-format
-      - pipx
-      - python3-argcomplete
-      - libsasl2-dev
-      - libldap2-dev
-      - libpq-dev
-      - valgrind
-      - smem
+    name: "{{ dev_toolchain_packages }}"
     state: latest
 
 - name: Install npm packages
