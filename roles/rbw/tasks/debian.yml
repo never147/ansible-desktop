@@ -43,3 +43,10 @@
     - rbw_available_version is defined
     - rbw_available_version != ""
     - rbw_installed_version.stdout == '' or rbw_available_version is version(rbw_installed_version.stdout, '>')
+
+- name: Download rbw-pinentry-keyring helper script
+  get_url:
+    url: "https://raw.githubusercontent.com/doy/rbw/refs/heads/main/bin/rbw-pinentry-keyring"
+    dest: "/usr/local/bin/rbw-pinentry-keyring"
+    mode: '0755'
+  become: yes
