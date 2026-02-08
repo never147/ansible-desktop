@@ -30,6 +30,8 @@ desktop_packages:
     - gimp
     - htop
     - whois
+    - wmctrl
+    - neovim
 
 
 desktop_packages_unwanted:
