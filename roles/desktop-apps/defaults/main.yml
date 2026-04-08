@@ -15,7 +15,6 @@ desktop_packages:
     - remmina
     # - pdftk
     - dos2unix
-    - xul-ext-lightning
     - thunderbird
     - ipcalc
     - vim
