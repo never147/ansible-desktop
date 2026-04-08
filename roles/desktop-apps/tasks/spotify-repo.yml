@@ -1,14 +1,41 @@
 ---
+# The spotify-client postinst writes /etc/apt/sources.list.d/spotify.list itself
+# (it is not a packaged file, so it cannot be diverted). Its opt-out is to leave an
+# existing spotify.list in place: it only writes the repo line when the file does not
+# already exist. We therefore keep the file present but empty of active entries, which
+# (a) stops the postinst recreating an active "deb" line on install/upgrade, and
+# (b) avoids the apt "configured multiple times" warning vs the deb822 spotify.sources.
+- name: Neutralise Spotify's self-managed spotify.list (repo is configured via spotify.sources)
+  copy:
+    dest: /etc/apt/sources.list.d/spotify.list
+    content: |
+      # Intentionally left empty by ansible.
+      # The Spotify repository is configured via the deb822 file spotify.sources.
+      # This file exists only to stop the spotify-client postinst from re-adding a
+      # "deb ... repository.spotify.com ..." line, which would duplicate spotify.sources.
+      # Do NOT add a "deb" line here.
+    owner: root
+    group: root
+    mode: "0644"
 
-# curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-- name: Add spotify repo key
+- name: Remove Spotify keys from legacy keyring
   apt_key:
-    url: "https://download.spotify.com/debian/pubkey_{{ item }}.gpg"
-    keyring: /etc/apt/trusted.gpg.d/spotify.gpg
+    id: "{{ item }}"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
   loop:
-    - C85668DF69375001
+    - 5384CE82BA52C83A  # Primary key
+    - 6224F9941A8AA6D1  # Subkey
+    - C85668DF69375001  # Old deprecated key
+  failed_when: false
 
-#echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-- name: Add spotify repo
-  apt_repository:
-    repo: deb http://repository.spotify.com stable non-free
+- name: Add Spotify repository
+  deb822_repository:
+    name: spotify
+    types: deb
+    uris: http://repository.spotify.com
+    suites: stable
+    components: non-free
+    architectures: amd64
+    signed_by: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc
+  register: spotify_repo

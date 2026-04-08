@@ -9,6 +9,13 @@
     repo: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ os_codename }} contrib"
     state: absent
 
+- name: Remove VirtualBox key from legacy keyring
+  apt_key:
+    id: "A2F683C52980AECF"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
 - name: Pre-accept license agreement
   debconf:
     name: virtualbox-ext-pack

@@ -1,14 +1,31 @@
-- name: Add Nodesource repo key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-
-- name: Add Nodesource apt repo
+- name: Remove old nodesource.list file
   apt_repository:
     repo: "deb [arch=amd64] https://deb.nodesource.com/{{ node_repo }} {{ os_codename }} main"
-    state: present
-    filename: nodesource-{{ node_repo }}
-  vars:
-    node_repo: node_18.x
+    filename: "nodesource-{{ node_repo }}"
+    state: absent
+
+- name: Remove NodeSource key from legacy keyring
+  apt_key:
+    id: "2F59B5F99B1BE0B4"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add NodeSource repository
+  deb822_repository:
+    name: "nodesource-{{ node_repo }}"
+    types: deb
+    uris: "https://deb.nodesource.com/{{ node_repo }}"
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  register: nodesource_repo
+
+- name: Update apt cache when the NodeSource repository changed
+  apt:
+    update_cache: yes
+  when: nodesource_repo is changed
 
 - name: Install NodeJS
   apt:

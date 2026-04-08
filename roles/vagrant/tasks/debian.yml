@@ -1,16 +1,32 @@
 ---
-# curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-- name: Add hasicorp apt key
-  apt_key:
-    url: https://apt.releases.hashicorp.com/gpg
-    state: present
-
-# sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-- name: Add hashicorp apt repo
+- name: Remove old hashicorp.list file
   apt_repository:
     repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ os_codename }} main"
-    state: present
     filename: hashicorp
+    state: absent
+
+- name: Remove HashiCorp key from legacy keyring
+  apt_key:
+    id: "AA16FCBCA621E701"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add HashiCorp repository
+  deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: https://apt.releases.hashicorp.com
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://apt.releases.hashicorp.com/gpg
+  register: hashicorp_repo
+
+- name: Update apt cache when the HashiCorp repository changed
+  apt:
+    update_cache: yes
+  when: hashicorp_repo is changed
 
 # sudo apt-get update && sudo apt-get install vagrant
 - name: Install vagrant

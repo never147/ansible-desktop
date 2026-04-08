@@ -5,6 +5,11 @@
   tags:
     - apt_update
 
+- name: Install required packages for deb822_repository
+  apt:
+    name: python3-debian
+    state: present
+
 - name: Update all packages to the latest version
   apt:
     upgrade: dist

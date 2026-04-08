@@ -6,20 +6,40 @@
 #  changed_when: no
 #  check_mode: no
 
-- name: Google package signing key
-  apt_key:
-    url: http://dl-ssl.google.com/linux/linux_signing_key.pub
-
-- name: Google package repo
+- name: Remove old google-chrome.list file (HTTPS)
   apt_repository:
     repo: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
     filename: google-chrome
+    state: absent
 
-- name: Google package repo
+- name: Remove old google-chrome.list file (HTTP)
   apt_repository:
     repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
     filename: google-chrome
     state: absent
+
+- name: Remove Google key from legacy keyring
+  apt_key:
+    id: "7FAC5991"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Google Chrome repository
+  deb822_repository:
+    name: google-chrome
+    types: deb
+    uris: https://dl.google.com/linux/chrome/deb/
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://dl.google.com/linux/linux_signing_key.pub
+  register: google_chrome_repo
+
+- name: Update apt cache when the Chrome repository changed
+  apt:
+    update_cache: yes
+  when: google_chrome_repo is changed
 
 - name: Install chrome
   apt:

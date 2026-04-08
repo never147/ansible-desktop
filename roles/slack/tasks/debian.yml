@@ -12,16 +12,34 @@
 #    state: present
 #  when: is_installed.rc == 1
 
-- name: Install apt key
-  apt_key:
-    url: "https://packagecloud.io/slacktechnologies/slack/gpgkey"
-    state: present
-
-- name: Add slack apt repo
+- name: Remove old slack.list file
   apt_repository:
     repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
-    state: present
     filename: slack
+    state: absent
+
+- name: Remove Slack key from legacy keyring
+  apt_key:
+    id: "D938EC0D038651BD"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Slack repository
+  deb822_repository:
+    name: slack
+    types: deb
+    uris: https://packagecloud.io/slacktechnologies/slack/debian/
+    suites: jessie
+    components: main
+    architectures: amd64
+    signed_by: https://packagecloud.io/slacktechnologies/slack/gpgkey
+  register: slack_repo
+
+- name: Update apt cache when the Slack repository changed
+  apt:
+    update_cache: yes
+  when: slack_repo is changed
 
 - apt:
     name: "{{ slack_package }}"
