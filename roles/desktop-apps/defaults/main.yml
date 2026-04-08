@@ -41,7 +41,6 @@ desktop_packages_unwanted:
 desktop_extra_packages:
   ubuntu:
     - spotify-client
-    - sublime-text
     - dropbox
 
 desktop_snaps:
