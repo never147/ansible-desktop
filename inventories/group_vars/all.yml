@@ -19,31 +19,55 @@ asdf_plugins:
   - name: awscli
     versions:
       - latest
+  - name: bitwarden
+    versions:
+      - latest
+  - name: bitwarden-secrets-manager
+    versions:
+      - latest
+  - name: cyclonedx
+    versions:
+      - latest
+  - name: direnv
+    versions:
+      - latest
   - name: dive
+    versions:
+      - latest
+  - name: grype
     versions:
       - latest
   - name: packer
     versions:
       - latest
-  - name: shellcheck
-    versions:
-      - latest
   - name: pre-commit
     versions:
       - latest
-  - name: terraform-docs
+  - name: shellcheck
     versions:
       - latest
   - name: terraform
     versions:
       - latest
+  - name: terraform-docs
+    versions:
+      - latest
+  - name: terragrunt
+    versions:
+      - latest
   - name: tflint
+    versions:
+      - latest
+  - name: tfnotify
     versions:
       - latest
   - name: tfsec
     versions:
       - latest
   - name: trivy
+    versions:
+      - latest
+  - name: uv
     versions:
       - latest
   - name: yq
