@@ -6,17 +6,34 @@
 #  changed_when: no
 #  check_mode: no
 
-- name: Remove old google-chrome.list file (HTTPS)
-  apt_repository:
-    repo: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google-chrome
+- name: Remove Chrome's self-managed apt repo files (repo is configured via google-chrome-managed.sources)
+  # google-chrome-stable manages /etc/apt/sources.list.d/google-chrome.{list,sources}
+  # itself, via its postinst and /etc/cron.daily/google-chrome. The postinst
+  # rewrites google-chrome.sources whenever that file exists, ignoring
+  # repo_add_once, so ansible cannot reliably own that filename. We remove the
+  # vendor's files and configure the repo under a distinct filename it never
+  # touches. With these files gone (and the defaults flags below), neither the
+  # postinst nor the cron recreates them.
+  file:
+    path: "{{ item }}"
     state: absent
+  loop:
+    - /etc/apt/sources.list.d/google-chrome.list
+    - /etc/apt/sources.list.d/google-chrome.sources
 
-- name: Remove old google-chrome.list file (HTTP)
-  apt_repository:
-    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google-chrome
-    state: absent
+- name: Stop google-chrome reconfiguring its own apt repo
+  copy:
+    dest: /etc/default/google-chrome
+    content: |
+      # Managed by ansible. The Google Chrome apt repository is configured via the
+      # deb822 file /etc/apt/sources.list.d/google-chrome-managed.sources. These
+      # settings stop the package postinst and /etc/cron.daily/google-chrome from
+      # re-adding or rewriting google-chrome.sources / google-chrome.list.
+      repo_add_once="false"
+      repo_reenable_on_distupgrade="false"
+    owner: root
+    group: root
+    mode: "0644"
 
 - name: Remove Google key from legacy keyring
   apt_key:
@@ -27,7 +44,7 @@
 
 - name: Add Google Chrome repository
   deb822_repository:
-    name: google-chrome
+    name: google-chrome-managed
     types: deb
     uris: https://dl.google.com/linux/chrome/deb/
     suites: stable
