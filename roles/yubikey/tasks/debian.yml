@@ -1,8 +1,37 @@
 ---
-- name: Add Yubico apt repo
-  apt_repository:
-    repo: ppa:yubico/stable
-    codename: "{{ os_codename }}"
+- name: Remove old yubico.list files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/apt/sources.list.d/ppa_yubico_stable_{{ os_codename }}.list"
+    - "/etc/apt/sources.list.d/ppa_yubico_stable_{{ os_codename }}.list.save"
+
+- name: Remove Yubico PPA keys from legacy keyring
+  apt_key:
+    id: "{{ item }}"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  loop:
+    - 3653E21064B19D134466702E43D5C49532CBA1A9  # Old rsa1024 key
+    - 990BD85D1C4F411ABC0ECE8DFA4EC8F2EE58CE0B  # New rsa4096 key
+  failed_when: false
+
+- name: Add Yubico PPA repository
+  deb822_repository:
+    name: yubico-stable-ppa
+    types: deb
+    uris: http://ppa.launchpad.net/yubico/stable/ubuntu
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFA4EC8F2EE58CE0B
+  register: yubico_repo
+
+- name: Update apt cache when the Yubico PPA changed
+  apt:
+    update_cache: yes
+  when: yubico_repo is changed
 
 - apt:
     name: 

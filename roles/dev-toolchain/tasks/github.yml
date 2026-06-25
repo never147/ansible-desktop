@@ -1,11 +1,31 @@
-- name: Github CLI apt key
-  apt_key:
-    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
-
-- name: Github CLI apt repo
+- name: Remove old github-cli.list file
   apt_repository:
-    filename: github-cli
     repo: "deb [arch=amd64] https://cli.github.com/packages stable main"
+    filename: github-cli
+    state: absent
+
+- name: Remove GitHub CLI key from legacy keyring
+  apt_key:
+    id: "23F3D4EA75716059"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add GitHub CLI repository
+  deb822_repository:
+    name: github-cli
+    types: deb
+    uris: https://cli.github.com/packages
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+  register: github_cli_repo
+
+- name: Update apt cache when the GitHub CLI repository changed
+  apt:
+    update_cache: yes
+  when: github_cli_repo is changed
 
 - name: Install GitHub CLI
   apt:

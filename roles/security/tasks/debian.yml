@@ -2,6 +2,7 @@
 - name: Install security related packages
   apt:
     name:
+      - apparmor-utils
       - debsums
       - deborphan
       - gpg

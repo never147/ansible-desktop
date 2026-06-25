@@ -12,16 +12,50 @@
 #    state: present
 #  when: is_installed.rc == 1
 
-- name: Install apt key
-  apt_key:
-    url: "https://packagecloud.io/slacktechnologies/slack/gpgkey"
-    state: present
+- name: Stop slack reconfiguring its own apt repo (managed via slack.sources)
+  # slack-desktop re-adds /etc/apt/sources.list.d/slack.list via its postinst
+  # (repo_add_once) and /etc/cron.daily/slack. The repo is managed by ansible as
+  # the deb822 file slack.sources, so disable the package's own repo management
+  # to stop it re-adding a duplicate "deb" line.
+  copy:
+    dest: /etc/default/slack
+    content: |
+      # Managed by ansible. The Slack apt repository is configured via the deb822
+      # file /etc/apt/sources.list.d/slack.sources. These settings stop the
+      # slack-desktop package and /etc/cron.daily/slack from re-adding slack.list.
+      repo_add_once="false"
+      repo_reenable_on_distupgrade="false"
+    owner: root
+    group: root
+    mode: "0644"
 
-- name: Add slack apt repo
-  apt_repository:
-    repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
-    state: present
-    filename: slack
+- name: Remove Slack's self-managed slack.list (repo is configured via slack.sources)
+  file:
+    path: /etc/apt/sources.list.d/slack.list
+    state: absent
+
+- name: Remove Slack key from legacy keyring
+  apt_key:
+    id: "D938EC0D038651BD"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Slack repository
+  deb822_repository:
+    name: slack
+    types: deb
+    uris: https://packagecloud.io/slacktechnologies/slack/debian/
+    suites: jessie
+    components: main
+    architectures: amd64
+    signed_by: https://packagecloud.io/slacktechnologies/slack/gpgkey
+  register: slack_repo
+
+- name: Update apt cache when the Slack repository changed
+  apt:
+    update_cache: yes
+  when: slack_repo is changed
 
 - apt:
     name: "{{ slack_package }}"

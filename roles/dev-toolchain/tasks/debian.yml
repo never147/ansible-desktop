@@ -1,11 +1,34 @@
 ---
+- name: Remove old deadsnakes.list files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/apt/sources.list.d/ppa_deadsnakes_ppa_{{ os_codename }}.list"
+    - "/etc/apt/sources.list.d/ppa_deadsnakes_ppa_{{ os_codename }}.list.save"
 
-- name: Adding ppa for unmaintained python versions
-  apt_repository:
-    #repo: "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu {{ os_codename }} main"
-    repo: ppa:deadsnakes/ppa
-    codename: "{{ os_codename }}"
-    state: present
+- name: Remove Deadsnakes PPA key from legacy keyring
+  apt_key:
+    id: "F23C5A6CF475977595C89F51BA6932366A755776"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Deadsnakes PPA repository
+  deb822_repository:
+    name: deadsnakes-ppa
+    types: deb
+    uris: http://ppa.launchpad.net/deadsnakes/ppa/ubuntu
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776
+  register: deadsnakes_repo
+
+- name: Update apt cache when the Deadsnakes PPA changed
+  apt:
+    update_cache: yes
+  when: deadsnakes_repo is changed
 
 - name: Set python versions
   set_fact:

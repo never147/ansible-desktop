@@ -1,11 +1,24 @@
 ---
-
-- name: Add dropbox repo key
-  apt_key:
-    url: https://linux.dropbox.com/fedora/rpm-public-key.asc
-    keyring: /etc/apt/trusted.gpg.d/dropbox-archive.gpg
-
-- name: Add dropbox repo
+- name: Remove old dropbox.list file
   apt_repository:
     repo: "deb https://linux.dropbox.com/ubuntu {{ os_codename }} main"
     filename: dropbox
+    state: absent
+
+- name: Remove Dropbox key from legacy keyring
+  apt_key:
+    id: "1C61A2656FB57B7E4DE0F4C1FC918B335044912E"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Dropbox repository
+  deb822_repository:
+    name: dropbox
+    types: deb
+    uris: https://linux.dropbox.com/ubuntu
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://linux.dropbox.com/fedora/rpm-public-key.asc
+  register: dropbox_repo

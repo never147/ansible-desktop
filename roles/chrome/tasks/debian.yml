@@ -6,20 +6,57 @@
 #  changed_when: no
 #  check_mode: no
 
-- name: Google package signing key
-  apt_key:
-    url: http://dl-ssl.google.com/linux/linux_signing_key.pub
-
-- name: Google package repo
-  apt_repository:
-    repo: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google-chrome
-
-- name: Google package repo
-  apt_repository:
-    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google-chrome
+- name: Remove Chrome's self-managed apt repo files (repo is configured via google-chrome-managed.sources)
+  # google-chrome-stable manages /etc/apt/sources.list.d/google-chrome.{list,sources}
+  # itself, via its postinst and /etc/cron.daily/google-chrome. The postinst
+  # rewrites google-chrome.sources whenever that file exists, ignoring
+  # repo_add_once, so ansible cannot reliably own that filename. We remove the
+  # vendor's files and configure the repo under a distinct filename it never
+  # touches. With these files gone (and the defaults flags below), neither the
+  # postinst nor the cron recreates them.
+  file:
+    path: "{{ item }}"
     state: absent
+  loop:
+    - /etc/apt/sources.list.d/google-chrome.list
+    - /etc/apt/sources.list.d/google-chrome.sources
+
+- name: Stop google-chrome reconfiguring its own apt repo
+  copy:
+    dest: /etc/default/google-chrome
+    content: |
+      # Managed by ansible. The Google Chrome apt repository is configured via the
+      # deb822 file /etc/apt/sources.list.d/google-chrome-managed.sources. These
+      # settings stop the package postinst and /etc/cron.daily/google-chrome from
+      # re-adding or rewriting google-chrome.sources / google-chrome.list.
+      repo_add_once="false"
+      repo_reenable_on_distupgrade="false"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Remove Google key from legacy keyring
+  apt_key:
+    id: "7FAC5991"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  failed_when: false
+
+- name: Add Google Chrome repository
+  deb822_repository:
+    name: google-chrome-managed
+    types: deb
+    uris: https://dl.google.com/linux/chrome/deb/
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://dl.google.com/linux/linux_signing_key.pub
+  register: google_chrome_repo
+
+- name: Update apt cache when the Chrome repository changed
+  apt:
+    update_cache: yes
+  when: google_chrome_repo is changed
 
 - name: Install chrome
   apt:
