@@ -79,7 +79,9 @@
 - name: Install desktop Snaps
   snap:
     name: "{{ all_desktop_snaps }}"
+  tags: [snaps]
 
 - name: Set Snap options
   command: snap set core experimental.refresh-app-awareness=true
+  tags: [snaps]
 
