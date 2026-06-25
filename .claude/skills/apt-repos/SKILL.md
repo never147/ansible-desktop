@@ -110,11 +110,18 @@ Each vendor uses a different opt-out mechanism — there is no single trick:
 all run **before** the `apt` install, so a fresh install's postinst sees the
 flags off and no file to recreate.
 
-## dpkg-divert does not apply
+## dpkg-divert does not apply to these repository files
 
-Do not reach for `dpkg-divert`. It only redirects files that dpkg itself
-installs from inside a `.deb`. None of these files are dpkg-owned — they are
-written by maintainer scripts/cron — so there is nothing to divert.
+`dpkg-divert` only redirects files that dpkg itself installs from inside a
+`.deb`. The vendor repository files here are written by maintainer scripts or
+cron, **not** shipped in a `.deb`, so there is nothing for `dpkg-divert` to act
+on — use the opt-out mechanisms above instead.
+
+This is specific to these files, not a blanket rule against `dpkg-divert`. If a
+future package *ships* a config file inside its `.deb` that you need to
+override, `dpkg-divert` is the right tool. Check with `dpkg -S <path>`: if it
+names an owning package the file is dpkg-managed and divertible; if it reports
+"no path found", it is not.
 
 ## Verifying
 
@@ -131,4 +138,6 @@ written by maintainer scripts/cron — so there is nothing to divert.
   changed` — slow, and was explicitly rejected.
 - **Using the vendor's own filename** for a self-managing repository (Chrome) —
   it will be overwritten. Use a distinct `*-managed.sources` name.
-- **Reaching for `dpkg-divert`** — inapplicable here.
+- **Reaching for `dpkg-divert`** for these files — they aren't dpkg-owned, so
+  use the vendor opt-out mechanisms instead (it remains valid for files a `.deb`
+  actually ships).

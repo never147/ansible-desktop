@@ -38,6 +38,17 @@ under `--tags <role>`) set two facts you should use instead of hard-coding:
 
 Hard-coding a codename like `jammy` is a bug — it breaks on other releases.
 
+### Prefer dict-indexed facts in new code
+
+Newer Ansible deprecates the injected top-level fact variables
+(`ansible_os_family`, `ansible_distribution`, `ansible_distribution_release`)
+and warns when you use them; the supported form is dict-indexed under
+`ansible_facts` — `ansible_facts['os_family']`, `ansible_facts['distribution']`,
+and so on. The dispatch include and `pre_tasks` above still use the injected
+form to match the existing code, which is what produces those deprecation
+warnings. Use `ansible_facts['...']` for new code, and converting the existing
+usages is the way to silence the warnings.
+
 ## Defaults and variables
 
 Role defaults go in `defaults/main.yml` with a `# defaults file for <role>`
