@@ -1,0 +1,44 @@
+---
+# Claude Desktop (beta) from Anthropic's apt repository.
+# https://code.claude.com/docs/en/desktop-linux
+#
+# The claude-desktop package self-manages an *active* repository file
+# /etc/apt/sources.list.d/claude-desktop.list (signed-by a different keyring under
+# /usr/share/keyrings), controlled by CLAUDE_DESKTOP_ADD_REPO in
+# /etc/default/claude-desktop. Left enabled it duplicates the deb822
+# claude-desktop.sources managed here, and apt aborts every operation with
+# "Conflicting values set for option Signed-By". So, like Chrome and Slack, we turn
+# the package's repo self-management off and own the definition ourselves. These
+# tasks run (via the include in debian.yml) BEFORE the package is installed, so a
+# fresh install's postinst sees the flag off and writes no claude-desktop.list.
+- name: Stop claude-desktop reconfiguring its own apt repo (managed via claude-desktop.sources)
+  copy:
+    dest: /etc/default/claude-desktop
+    content: |
+      # Managed by ansible. The Claude Desktop apt repository is configured via the
+      # deb822 file /etc/apt/sources.list.d/claude-desktop.sources. This setting stops
+      # the claude-desktop package from re-adding its own claude-desktop.list, which
+      # would duplicate that source and break apt with a "Conflicting values set for
+      # option Signed-By" error.
+      CLAUDE_DESKTOP_ADD_REPO="false"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Remove claude-desktop's self-managed claude-desktop.list (repo is configured via claude-desktop.sources)
+  file:
+    path: /etc/apt/sources.list.d/claude-desktop.list
+    state: absent
+
+- name: Add Claude Desktop (Anthropic) repository
+  deb822_repository:
+    name: claude-desktop
+    types: deb
+    uris: https://downloads.claude.ai/claude-desktop/apt/stable
+    suites: stable
+    components: main
+    architectures:
+      - amd64
+      - arm64
+    signed_by: https://downloads.claude.ai/claude-desktop/key.asc
+  register: claude_desktop_repo
