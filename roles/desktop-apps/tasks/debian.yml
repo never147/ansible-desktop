@@ -50,6 +50,12 @@
   when: >
     'dropbox' in all_desktop_packages
 
+- name: Add Claude Desktop repository
+  include_tasks:
+    file: claude-desktop-repo.yml
+  when: >
+    'claude-desktop' in all_desktop_packages
+
 - name: Update apt cache when a desktop repository changed
   apt:
     update_cache: yes
@@ -58,6 +64,7 @@
     or (spotify_repo is defined and spotify_repo is changed)
     or (sublime_repo is defined and sublime_repo is changed)
     or (dropbox_repo is defined and dropbox_repo is changed)
+    or (claude_desktop_repo is defined and claude_desktop_repo is changed)
 
 - name: Install desktop packages
   apt:
