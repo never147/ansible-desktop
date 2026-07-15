@@ -20,12 +20,23 @@
       - "golang-doc"
     state: latest
 
+# golang-go is a metapackage that pulls in a versioned toolchain installed at
+# /usr/lib/go-<version> (there is no unversioned /usr/lib/go), so discover the
+# directory rather than hardcoding a path that does not exist.
+- name: Locate installed Go toolchain directory
+  find:
+    paths: /usr/lib
+    patterns: 'go-*'
+    file_type: directory
+  register: golang_install_dirs
+
 - name: Update alternatives for go
   alternatives:
     name: "{{ item }}"
     link: "/usr/bin/{{ item }}"
-    path: "/usr/lib/go/bin/{{ item }}"
+    path: "{{ (golang_install_dirs.files | map(attribute='path') | sort | last) }}/bin/{{ item }}"
   with_items:
     - go
     - gofmt
+  when: golang_install_dirs.files | length > 0
 
