@@ -1,18 +1,8 @@
 ---
-- name: udevadmin version
-  command: udevadm --version
-  register: udevadm_version
-  check_mode: no
-
 - name: Install libinput
   apt:
     name: libinput-tools
     state: latest
-
-- name: libinput version
-  command: libinput --version
-  register: libinput_version
-  check_mode: no
 
 - name: Add libinput directory
   file:
