@@ -50,4 +50,4 @@
   when:
     - pandoc_available_version != ""
     - pandoc_deb_url is defined
-    - pandoc_installed_version == "" or (pandoc_available_version != (pandoc_installed_version | regex_replace('^\\d+:', '')))
+    - pandoc_installed_version == "" or (pandoc_available_version != (pandoc_installed_version | regex_replace('^\\d+:', '') | regex_replace('-.*$', '')))
