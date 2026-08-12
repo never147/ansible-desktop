@@ -13,45 +13,30 @@
     - debug:
         msg: "Gophers ppa not supported"
 
-# - name: Check if "{{ golang_package }}" package is already installed
-#   shell: dpkg-query -W -f='${Status} ${Version}' "{{ golang_package }}" | grep 'hold ok installed {{ golang_version }}'
-#   register: golang_is_installed
-#   failed_when: no
-#   changed_when: no
-#   check_mode: no
-
-#- name: Hold golang package
-#  command: apt-mark unhold "{{ golang_package }}"
-#  when: golang_is_installed.rc == 1
-
-- name: "Install {{ golang_package }} version {{ golang_package_version }} package"
+- name: "Install latest Go packages"
   apt:
-    #name: "{{ golang_package }}={{ golang_package_version }}"
-    name: 
-      - "{{ golang_package }}-{{ golang_package_version }}-go"
-      - "{{ golang_package }}-{{ golang_package_version }}-doc"
+    name:
+      - "golang-go"
+      - "golang-doc"
     state: latest
-#  when: golang_is_installed.rc == 1
-#  register: golang_is_installed
-#  check_mode: no
 
-# - name: Hold golang package
-#   command: apt-mark hold "{{ golang_package }}"
-#   when: golang_is_installed.rc == 1
+# golang-go is a metapackage that pulls in a versioned toolchain installed at
+# /usr/lib/go-<version> (there is no unversioned /usr/lib/go), so discover the
+# directory rather than hardcoding a path that does not exist.
+- name: Locate installed Go toolchain directory
+  find:
+    paths: /usr/lib
+    patterns: 'go-*'
+    file_type: directory
+  register: golang_install_dirs
 
 - name: Update alternatives for go
   alternatives:
     name: "{{ item }}"
     link: "/usr/bin/{{ item }}"
-    path: "/usr/lib/go-{{ golang_package_version }}/bin/{{ item }}"
+    path: "{{ (golang_install_dirs.files | map(attribute='path') | sort | last) }}/bin/{{ item }}"
   with_items:
     - go
     - gofmt
-
-- name: Manage environment vars
-  lineinfile:
-    name: /etc/profile.d/go
-    regexp: '^export GOROOT'
-    create: yes
-    line: "export GOROOT=/usr/lib/go-{{ golang_package_version }}"
+  when: golang_install_dirs.files | length > 0
 
