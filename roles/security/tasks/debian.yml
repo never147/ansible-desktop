@@ -15,3 +15,37 @@
     name: unattended-upgrades
     state: started
     enabled: true
+
+- name: Create apt timer drop-in directories
+  file:
+    path: "/etc/systemd/system/{{ item }}.timer.d"
+    state: directory
+    mode: "0755"
+  loop:
+    - apt-daily
+    - apt-daily-upgrade
+
+- name: Run apt downloads and upgrades overnight only
+  copy:
+    dest: "/etc/systemd/system/{{ item.timer }}.timer.d/override.conf"
+    mode: "0644"
+    content: |
+      [Timer]
+      OnCalendar=
+      OnCalendar=*-*-* {{ item.time }}
+      RandomizedDelaySec=30m
+      Persistent=false
+  loop:
+    - { timer: apt-daily, time: "02:00" }
+    - { timer: apt-daily-upgrade, time: "03:00" }
+  register: apt_timer_overrides
+
+- name: Enable apt timers
+  systemd:
+    name: "{{ item }}.timer"
+    state: started
+    enabled: true
+    daemon_reload: "{{ apt_timer_overrides is changed }}"
+  loop:
+    - apt-daily
+    - apt-daily-upgrade
