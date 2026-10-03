@@ -53,17 +53,21 @@
     notify:
       - postmap SASL password file
   
-  - name: SASL auth config
+  - name: Remove old SASL auth block
     blockinfile:
       path: /etc/postfix/main.cf
-      insertafter: "^relayhost"
-      block: |
-        smtp_sasl_auth_enable = yes
-        smtp_sasl_password_maps = hash:/etc/postfix/sasl/passwords
-        #smtp_sasl_mechanism_filter = digest-md5
-        smtp_sasl_security_options =
-        smtp_tls_wrappermode = yes
-        smtp_tls_security_level = encrypt
+      state: absent
+    notify:
+      - postfix reload
+
+  - name: SASL auth config
+    lineinfile:
+      path: /etc/postfix/main.cf
+      regexp: '^{{ item.key }}\s*='
+      line: "{{ item.key }} = {{ item.value }}"
+    loop: "{{ postfix_sasl_config | dict2items }}"
+    loop_control:
+      label: "{{ item.key }}"
     notify:
       - postfix reload
 
