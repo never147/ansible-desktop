@@ -25,6 +25,8 @@ dev_toolchain_packages:
     - valgrind
     - smem
     - rpi-imager
+    - podman
+    - uidmap
     
 dev_toolchain_python_versions:
     - "3"
