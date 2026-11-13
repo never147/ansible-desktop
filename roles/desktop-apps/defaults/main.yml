@@ -6,7 +6,7 @@ desktop_features: []
 desktop_packages:
   ubuntu:
     - gnupg
-    - keepassx
+    - keepassxc
     - openssh-server
     - git
     - jq
