@@ -25,7 +25,6 @@ desktop_packages:
     - at
     - lzma
     - bzip2
-    - cheese
     - gimp
     - htop
     - whois
