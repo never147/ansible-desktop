@@ -4,3 +4,13 @@ postfix_sasl_user: ""
 postfix_sasl_pass: ""
 postfix_relayhost: ""
 postfix_unix_user: ""
+
+# main.cf settings applied when SASL credentials are set
+postfix_sasl_config:
+  relayhost: "{{ postfix_relayhost }}"
+  smtp_sasl_auth_enable: "yes"
+  smtp_sasl_password_maps: hash:/etc/postfix/sasl/passwords
+  smtp_sasl_security_options: noanonymous
+  smtp_tls_wrappermode: "yes"
+  smtp_tls_security_level: secure
+  smtp_tls_CApath: /etc/ssl/certs

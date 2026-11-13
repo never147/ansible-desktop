@@ -1,4 +1,8 @@
 ---
+- name: Install GitHub CLI
+  include_tasks:
+    file: github.yml
+
 - name: Remove old deadsnakes.list files
   file:
     path: "{{ item }}"
@@ -68,7 +72,3 @@
       - libpython2.7-minimal
     state: absent
   when: os_codename == "focal"
-
-- name: Install GitHub CLI
-  include_tasks:
-    file: github.yml
