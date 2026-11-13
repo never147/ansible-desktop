@@ -6,7 +6,7 @@ desktop_features: []
 desktop_packages:
   ubuntu:
     - gnupg
-    - keepassx
+    - keepassxc
     - openssh-server
     - git
     - jq
@@ -25,7 +25,6 @@ desktop_packages:
     - at
     - lzma
     - bzip2
-    - cheese
     - gimp
     - htop
     - whois
