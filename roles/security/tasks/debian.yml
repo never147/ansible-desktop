@@ -4,7 +4,6 @@
     name:
       - apparmor-utils
       - debsums
-      - deborphan
       - gpg
       - unattended-upgrades
       - libsecret-tools
