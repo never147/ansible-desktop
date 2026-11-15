@@ -1,32 +1,36 @@
 dev_toolchain_packages:
     - build-essential
+    - clang-format
+    - debhelper
+    - graphviz
+    - libldap2-dev
+    - libpq-dev
+    - libsasl2-dev
+    - lmodern
+    - maven
+    - npm
+    - openjdk-8-jdk
+    - openjdk-17-jdk
+    - openjdk-21-jdk
+    - pandoc
+    - pipx
+    - podman
+    - python3-argcomplete
     - python3-jsonschema
     - python3-pip
     - python3-setuptools
-    - debhelper
-    - pandoc
+    - retry
+    - ripgrep
+    - rpi-imager
+    - smem
     - texlive-latex-base
     - texlive-fonts-recommended
     - texlive-extra-utils
     - texlive-latex-extra
-    - lmodern
-    - graphviz
-    - maven
-    - npm
-    - openjdk-8-jdk
-    - retry
-    - ripgrep
-    - clang-format
-    - pipx
-    - python3-argcomplete
-    - libsasl2-dev
-    - libldap2-dev
-    - libpq-dev
-    - valgrind
-    - smem
-    - rpi-imager
-    - podman
     - uidmap
+    - valgrind
+
+dev_toolchain_install_deadsnakes: yes
     
 dev_toolchain_python_versions:
     - "3"
