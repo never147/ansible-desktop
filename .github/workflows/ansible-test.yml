@@ -42,4 +42,4 @@ jobs:
     - name: Apply
       run: |
         ./bin/apply.sh \
-          --skip-tags "docker,shorewall,shorewall_config,hid-apple,power-save,snaps"
+          --skip-tags "no-ci"

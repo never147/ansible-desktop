@@ -63,6 +63,7 @@
     - role: docker
       tags:
         - docker
+        - no-ci
         - system
         - virtual
     - role: golang
@@ -79,6 +80,7 @@
         - gopass
     #- role: grub
     #  tags:
+    #    - no-ci
     #    - system
     - role: rbw
       tags:
@@ -91,6 +93,7 @@
         - system
         - devices
         - hid-apple
+        - no-ci
     - role: jabra
       tags:
         - collaboration
@@ -106,8 +109,11 @@
       tags:
         - system
         - devices
+        - no-ci
         - power-save
     - role: shorewall
+      tags:
+        - no-ci
     - role: slack
       tags:
         - apps
@@ -119,6 +125,7 @@
         - system
         - apps
         - desktop
+        - no-ci
         - virtual
         - virtualbox
     #- role: yubikey
