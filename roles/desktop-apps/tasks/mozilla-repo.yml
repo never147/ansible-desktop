@@ -1,0 +1,27 @@
+- name: Remove old mozillateam.list file
+  file:
+    path: /etc/apt/sources.list.d/mozillateam.list
+    state: absent
+
+- name: Remove Mozilla PPA keys from legacy keyring
+  apt_key:
+    id: "{{ item }}"
+    keyring: /etc/apt/trusted.gpg
+    state: absent
+  loop:
+    - 0AB215679C571D1C8325275B9BDB3D89CE49EC21  # Old rsa1024 key
+    - 738BEB9321D1AAEC13EA9391AEBDF4819BE21867  # New rsa4096 key
+  failed_when: false
+
+- name: Add Mozilla PPA repository
+  deb822_repository:
+    name: mozillateam-ppa
+    types: deb
+    uris: http://ppa.launchpad.net/mozillateam/ppa/ubuntu
+    suites: "{{ os_codename }}"
+    components: main
+    architectures: amd64
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xAEBDF4819BE21867
+  register: mozillateam_repo
+
+

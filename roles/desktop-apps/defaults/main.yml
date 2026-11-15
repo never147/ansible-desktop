@@ -15,7 +15,6 @@ desktop_packages:
     - remmina
     # - pdftk
     - dos2unix
-    - thunderbird
     - ipcalc
     - vim
     - dmenu
@@ -38,7 +37,10 @@ desktop_packages_unwanted:
 
 desktop_extra_packages:
   ubuntu:
+    - thunderbird
+    - claude-desktop
     - spotify-client
+    - sublime-text
     - dropbox
 
 desktop_snaps:
