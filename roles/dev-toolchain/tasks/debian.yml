@@ -3,52 +3,6 @@
   include_tasks:
     file: github.yml
 
-- name: Remove old deadsnakes.list files
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - "/etc/apt/sources.list.d/ppa_deadsnakes_ppa_{{ os_codename }}.list"
-    - "/etc/apt/sources.list.d/ppa_deadsnakes_ppa_{{ os_codename }}.list.save"
-
-- name: Remove Deadsnakes PPA key from legacy keyring
-  apt_key:
-    id: "F23C5A6CF475977595C89F51BA6932366A755776"
-    keyring: /etc/apt/trusted.gpg
-    state: absent
-  failed_when: false
-
-- name: Add Deadsnakes PPA repository
-  deb822_repository:
-    name: deadsnakes-ppa
-    types: deb
-    uris: http://ppa.launchpad.net/deadsnakes/ppa/ubuntu
-    suites: "{{ os_codename }}"
-    components: main
-    architectures: amd64
-    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776
-  register: deadsnakes_repo
-
-- name: Update apt cache when the Deadsnakes PPA changed
-  apt:
-    update_cache: yes
-  when: deadsnakes_repo is changed
-
-- name: Set python versions
-  set_fact:
-    py_versions: "{{
-        py_versions|default([]) + [
-          'python' + item,
-          'python' + item + '-dev',
-          'python' + item + '-venv'
-        ]
-      }}"
-  with_items: "{{ dev_toolchain_python_versions }}"
-
-- name: Install python
-  apt:
-    name: "{{ py_versions + ['python-is-python3'] }}"
-
 - name: Installing apt packages for development
   apt:
     name: "{{ dev_toolchain_packages }}"
@@ -61,14 +15,8 @@
   loop:
     - markdown-table-formatter
 
-- name: Remove obsolete packages
-  apt:
-    name:
-      - python2
-      - python2.7
-      - python2.7-minimal
-      - libpython2.7
-      - libpython2.7-stdlib
-      - libpython2.7-minimal
-    state: absent
-  when: os_codename == "focal"
+- name: Install DeadSnakes Python
+  include_tasks:
+    file: deadsnakes-python.yml
+  when:
+    dev_toolchain_install_deadsnakes
